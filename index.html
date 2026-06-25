@@ -3,22 +3,31 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SoulMates — найди своего человека</title>
-  <meta name="description" content="Знакомства на основе реальных интересов. Steam, Spotify, Кинопоиск. Не тиндер.">
+  <title>SoulMates — сайт знакомств нового поколения</title>
+  <meta name="description" content="Знакомства на основе реальных интересов. Steam, Spotify, Кинопоиск. Режим пары. ML-совместимость.">
+  <meta property="og:title" content="SoulMates">
+  <meta property="og:description" content="Находи людей, а не фотографии.">
+  <meta property="og:url" content="https://soulmates.com.ru">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg: #0a0a0f;
-      --bg2: #0f0f1a;
-      --surface: #15151f;
-      --border: rgba(255,255,255,0.07);
-      --accent: #7c5cfc;
-      --accent2: #e0516e;
-      --accent3: #3dd6f5;
-      --text: #f0eeff;
-      --muted: #7b7a99;
-      --grad: linear-gradient(135deg, #7c5cfc, #e0516e);
+      --bg:       #060610;
+      --bg2:      #09091a;
+      --surface:  #0e0e20;
+      --surface2: #141428;
+      --border:   rgba(255,255,255,0.06);
+      --border2:  rgba(255,255,255,0.1);
+      --accent:   #5c44ff;
+      --accent-h: #7060ff;
+      --pink:     #ff4d6d;
+      --text:     #eeeef8;
+      --sub:      #8888aa;
+      --muted:    #44445a;
+      --r:        20px;
     }
 
     html { scroll-behavior: smooth; }
@@ -26,740 +35,1147 @@
     body {
       background: var(--bg);
       color: var(--text);
-      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      font-family: 'Inter', system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
-      line-height: 1.6;
     }
 
-    /* ── CANVAS BACKGROUND ── */
-    #bg-canvas {
+    /* Noise texture */
+    body::before {
+      content: '';
       position: fixed;
       inset: 0;
-      z-index: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+      background-size: 200px;
       pointer-events: none;
-      opacity: 0.5;
+      z-index: 0;
+      opacity: 0.4;
     }
 
-    /* ── NAV ── */
+    /* ─── NAV ─── */
     nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 18px 6vw;
-      background: rgba(10,10,15,0.8);
-      backdrop-filter: blur(20px);
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 6vw; height: 64px;
+      background: rgba(6,6,16,0.85);
+      backdrop-filter: blur(24px) saturate(1.5);
       border-bottom: 1px solid var(--border);
     }
 
     .logo {
-      font-size: 1.4rem;
-      font-weight: 700;
-      letter-spacing: -0.5px;
-      background: var(--grad);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      font-size: 1.15rem; font-weight: 700; letter-spacing: -0.3px;
+      color: var(--text); text-decoration: none;
     }
+    .logo span { color: var(--accent); }
 
-    .nav-links {
-      display: flex;
-      gap: 32px;
-      list-style: none;
+    .nav-center { display: flex; gap: 28px; list-style: none; }
+    .nav-center a {
+      color: var(--sub); font-size: 0.875rem; text-decoration: none;
+      transition: color 0.15s;
     }
+    .nav-center a:hover { color: var(--text); }
 
-    .nav-links a {
-      color: var(--muted);
-      text-decoration: none;
-      font-size: 0.9rem;
-      transition: color 0.2s;
+    .nav-right { display: flex; gap: 10px; align-items: center; }
+
+    .btn-sm {
+      font-size: 0.875rem; font-weight: 600; text-decoration: none;
+      padding: 8px 18px; border-radius: 8px; border: 1px solid var(--border2);
+      color: var(--text); background: transparent; cursor: pointer;
+      transition: background 0.15s; display: inline-block;
     }
+    .btn-sm:hover { background: var(--surface2); }
 
-    .nav-links a:hover { color: var(--text); }
-
-    .nav-cta {
-      background: var(--grad);
-      color: #fff;
-      border: none;
-      padding: 9px 22px;
-      border-radius: 50px;
-      font-size: 0.9rem;
-      font-weight: 600;
-      cursor: pointer;
-      text-decoration: none;
-      transition: opacity 0.2s, transform 0.2s;
+    .btn-accent {
+      background: var(--accent); border-color: var(--accent); color: #fff;
+      box-shadow: 0 0 24px rgba(92,68,255,0.3);
     }
+    .btn-accent:hover { background: var(--accent-h); border-color: var(--accent-h); opacity: 1; }
 
-    .nav-cta:hover { opacity: 0.85; transform: translateY(-1px); }
-
-    /* ── SECTIONS ── */
-    section { position: relative; z-index: 1; }
-
-    /* ── HERO ── */
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 120px 6vw 80px;
-    }
-
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(124,92,252,0.12);
-      border: 1px solid rgba(124,92,252,0.3);
-      border-radius: 50px;
-      padding: 6px 16px;
-      font-size: 0.8rem;
-      color: #a98fff;
-      margin-bottom: 32px;
-      letter-spacing: 0.5px;
-    }
-
-    .hero-badge span { font-size: 0.7rem; opacity: 0.7; }
-
-    .hero h1 {
-      font-size: clamp(2.8rem, 7vw, 6rem);
-      font-weight: 800;
-      line-height: 1.08;
-      letter-spacing: -2px;
-      max-width: 900px;
-      margin-bottom: 28px;
-    }
-
-    .hero h1 em {
-      font-style: normal;
-      background: var(--grad);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .hero-sub {
-      font-size: clamp(1rem, 2vw, 1.25rem);
-      color: var(--muted);
-      max-width: 560px;
-      margin-bottom: 48px;
-      line-height: 1.7;
-    }
-
-    .hero-actions {
-      display: flex;
-      gap: 16px;
-      flex-wrap: wrap;
-      justify-content: center;
-      margin-bottom: 80px;
-    }
-
-    .btn-primary {
-      background: var(--grad);
-      color: #fff;
-      border: none;
-      padding: 16px 36px;
-      border-radius: 50px;
-      font-size: 1rem;
-      font-weight: 700;
-      cursor: pointer;
-      text-decoration: none;
-      transition: transform 0.2s, opacity 0.2s;
-      box-shadow: 0 0 40px rgba(124,92,252,0.35);
-    }
-
-    .btn-primary:hover { transform: translateY(-2px); opacity: 0.9; }
-
-    .btn-ghost {
-      background: transparent;
-      color: var(--text);
-      border: 1px solid var(--border);
-      padding: 16px 36px;
-      border-radius: 50px;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      text-decoration: none;
-      transition: border-color 0.2s, background 0.2s;
-    }
-
-    .btn-ghost:hover { border-color: rgba(255,255,255,0.25); background: rgba(255,255,255,0.04); }
-
-    .hero-stats {
-      display: flex;
-      gap: 48px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-
-    .stat { text-align: center; }
-    .stat-num {
-      font-size: 2rem;
-      font-weight: 800;
-      background: var(--grad);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .stat-label { font-size: 0.8rem; color: var(--muted); margin-top: 4px; }
-
-    /* ── DIVIDER ── */
-    .section-divider {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0 6vw;
-      margin: 20px 0;
-      gap: 20px;
-    }
-    .section-divider::before, .section-divider::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: var(--border);
-    }
-    .section-divider span {
-      font-size: 0.75rem;
-      color: var(--muted);
-      letter-spacing: 2px;
-      text-transform: uppercase;
-    }
-
-    /* ── PROBLEM ── */
-    .problem {
-      padding: 100px 6vw;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .problem-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4px;
-      border-radius: 24px;
-      overflow: hidden;
-    }
-
-    .problem-card {
-      background: var(--surface);
-      padding: 40px;
-    }
-
-    .problem-card.bad { border-left: 3px solid #e0516e; }
-    .problem-card.good { border-left: 3px solid #7c5cfc; }
-    .problem-card.bad h3::before { content: '✗  '; color: #e0516e; }
-    .problem-card.good h3::before { content: '✓  '; color: #7c5cfc; }
-
-    .problem-card h3 {
-      font-size: 1.15rem;
-      margin-bottom: 16px;
-    }
-
-    .problem-card ul {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .problem-card ul li {
-      font-size: 0.95rem;
-      color: var(--muted);
-      padding-left: 16px;
-      position: relative;
-    }
-
-    .problem-card ul li::before {
-      content: '—';
-      position: absolute;
-      left: 0;
-    }
-
-    /* ── SECTION HEADER ── */
-    .section-header {
-      text-align: center;
-      max-width: 680px;
-      margin: 0 auto 64px;
-    }
-
-    .section-tag {
-      display: inline-block;
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 12px;
-    }
-
-    .section-header h2 {
-      font-size: clamp(2rem, 4vw, 3rem);
-      font-weight: 800;
-      letter-spacing: -1px;
-      line-height: 1.15;
-      margin-bottom: 16px;
-    }
-
-    .section-header p {
-      color: var(--muted);
-      font-size: 1.05rem;
-      line-height: 1.7;
-    }
-
-    /* ── FEATURES ── */
-    .features {
-      padding: 100px 6vw;
-    }
-
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2px;
-      max-width: 1200px;
-      margin: 0 auto;
-      border-radius: 24px;
-      overflow: hidden;
-    }
-
-    .feature-card {
-      background: var(--surface);
-      padding: 40px;
-      transition: background 0.3s;
-    }
-
-    .feature-card:hover { background: #1a1a28; }
-
-    .feature-icon {
-      width: 52px;
-      height: 52px;
-      border-radius: 14px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.5rem;
-      margin-bottom: 24px;
-    }
-
-    .feature-icon.purple { background: rgba(124,92,252,0.15); }
-    .feature-icon.pink   { background: rgba(224,81,110,0.15); }
-    .feature-icon.cyan   { background: rgba(61,214,245,0.15); }
-    .feature-icon.green  { background: rgba(52,211,153,0.15); }
-    .feature-icon.orange { background: rgba(251,146,60,0.15); }
-    .feature-icon.gold   { background: rgba(234,179,8,0.15); }
-
-    .feature-card h3 {
-      font-size: 1.1rem;
-      font-weight: 700;
-      margin-bottom: 10px;
-    }
-
-    .feature-card p {
-      font-size: 0.9rem;
-      color: var(--muted);
-      line-height: 1.65;
-    }
-
-    /* ── INTEGRATIONS ── */
-    .integrations {
-      padding: 100px 6vw;
-      background: var(--bg2);
-    }
-
-    .integrations-inner {
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .integrations-list {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-      margin-top: 0;
-    }
-
-    .integration-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 36px 32px;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      transition: border-color 0.3s, transform 0.3s;
-    }
-
-    .integration-card:hover {
-      border-color: rgba(124,92,252,0.4);
-      transform: translateY(-4px);
-    }
-
-    .integration-logo {
-      font-size: 2.2rem;
-      line-height: 1;
-    }
-
-    .integration-card h3 {
-      font-size: 1.1rem;
-      font-weight: 700;
-    }
-
-    .integration-card p {
-      font-size: 0.88rem;
-      color: var(--muted);
-      line-height: 1.6;
-      flex: 1;
-    }
-
-    .integration-tag {
-      display: inline-block;
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      padding: 4px 10px;
-      border-radius: 50px;
-      background: rgba(124,92,252,0.12);
-      color: #a98fff;
-      width: fit-content;
-    }
-
-    /* ── HOW IT WORKS ── */
-    .how {
-      padding: 100px 6vw;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .steps {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-      max-width: 700px;
-      margin: 0 auto;
-      position: relative;
-    }
-
-    .steps::before {
-      content: '';
-      position: absolute;
-      left: 27px;
-      top: 28px;
-      bottom: 28px;
-      width: 2px;
-      background: linear-gradient(to bottom, var(--accent), var(--accent2));
-      opacity: 0.3;
-    }
-
-    .step {
-      display: flex;
-      gap: 28px;
-      align-items: flex-start;
-      padding: 28px 0;
-    }
-
-    .step-num {
-      width: 56px;
-      height: 56px;
-      min-width: 56px;
-      border-radius: 50%;
-      background: var(--surface);
-      border: 2px solid rgba(124,92,252,0.4);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.1rem;
-      font-weight: 800;
-      color: var(--accent);
-      position: relative;
-      z-index: 1;
-    }
-
-    .step-content h3 {
-      font-size: 1.1rem;
-      font-weight: 700;
-      margin-bottom: 8px;
-      padding-top: 14px;
-    }
-
-    .step-content p {
-      font-size: 0.9rem;
-      color: var(--muted);
-      line-height: 1.65;
-    }
-
-    /* ── CTA ── */
-    .cta-section {
-      padding: 120px 6vw;
-      text-align: center;
-      background: var(--bg2);
-    }
-
-    .cta-inner {
-      max-width: 640px;
-      margin: 0 auto;
-    }
-
-    .cta-section h2 {
-      font-size: clamp(2rem, 5vw, 3.5rem);
-      font-weight: 800;
-      letter-spacing: -1.5px;
-      line-height: 1.1;
+    /* ─── UTILS ─── */
+    .tag {
+      display: inline-block; font-size: 0.7rem; font-weight: 600;
+      letter-spacing: 1.5px; text-transform: uppercase; color: var(--accent);
       margin-bottom: 20px;
     }
 
-    .cta-section p {
-      color: var(--muted);
-      font-size: 1.05rem;
-      margin-bottom: 40px;
-      line-height: 1.7;
-    }
+    h1, h2, h3 { letter-spacing: -0.5px; line-height: 1.1; }
 
-    .waitlist-form {
-      display: flex;
-      gap: 12px;
-      max-width: 460px;
+    section { position: relative; z-index: 1; }
+
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.55s ease, transform 0.55s ease; }
+    .reveal.on { opacity: 1; transform: none; }
+
+    /* ─── HERO ─── */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 0;
+      padding: 64px 6vw 0;
+      max-width: 1320px;
       margin: 0 auto;
     }
 
-    .waitlist-form input {
-      flex: 1;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 50px;
-      padding: 14px 22px;
-      font-size: 0.95rem;
+    .hero-copy { padding-right: 48px; }
+
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(92,68,255,0.08); border: 1px solid rgba(92,68,255,0.2);
+      border-radius: 6px; padding: 5px 12px;
+      font-size: 0.75rem; font-weight: 500; color: #9988ff;
+      margin-bottom: 28px;
+    }
+    .hero-eyebrow::before {
+      content: ''; width: 6px; height: 6px; border-radius: 50%;
+      background: var(--accent); flex-shrink: 0;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.6rem, 4.5vw, 4.2rem);
+      font-weight: 900;
       color: var(--text);
-      outline: none;
-      transition: border-color 0.2s;
+      margin-bottom: 24px;
     }
 
-    .waitlist-form input:focus { border-color: rgba(124,92,252,0.5); }
-    .waitlist-form input::placeholder { color: var(--muted); }
+    .hero h1 .accent { color: var(--accent); }
 
-    .waitlist-form button {
-      background: var(--grad);
-      color: #fff;
-      border: none;
-      padding: 14px 28px;
-      border-radius: 50px;
-      font-size: 0.95rem;
-      font-weight: 700;
-      cursor: pointer;
-      white-space: nowrap;
-      transition: opacity 0.2s, transform 0.2s;
+    .hero-desc {
+      font-size: 1.05rem; line-height: 1.75; color: var(--sub);
+      max-width: 480px; margin-bottom: 40px;
     }
 
-    .waitlist-form button:hover { opacity: 0.9; transform: translateY(-1px); }
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
 
-    .waitlist-note {
-      font-size: 0.8rem;
-      color: var(--muted);
-      margin-top: 14px;
+    .btn-primary {
+      font-size: 0.95rem; font-weight: 700; text-decoration: none;
+      padding: 13px 28px; border-radius: 10px; border: none;
+      background: var(--accent); color: #fff; cursor: pointer; display: inline-block;
+      box-shadow: 0 0 32px rgba(92,68,255,0.35);
+      transition: transform 0.15s, opacity 0.15s;
     }
+    .btn-primary:hover { transform: translateY(-1px); opacity: 0.92; }
 
-    /* ── FOOTER ── */
-    footer {
-      padding: 40px 6vw;
+    .btn-outline {
+      font-size: 0.95rem; font-weight: 600; text-decoration: none;
+      padding: 13px 28px; border-radius: 10px;
+      border: 1px solid var(--border2); color: var(--text);
+      background: transparent; cursor: pointer; display: inline-block;
+      transition: background 0.15s;
+    }
+    .btn-outline:hover { background: var(--surface2); }
+
+    .hero-meta {
+      margin-top: 48px; padding-top: 32px;
       border-top: 1px solid var(--border);
+      display: flex; gap: 40px;
+    }
+    .hero-meta-item {}
+    .hero-meta-item strong {
+      display: block; font-size: 1.6rem; font-weight: 800; color: var(--text);
+    }
+    .hero-meta-item span { font-size: 0.8rem; color: var(--sub); margin-top: 2px; display: block; }
+
+    /* ─── PHONE MOCKUP ─── */
+    .hero-visual {
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
+      justify-content: center;
+      align-items: flex-end;
+      position: relative;
+      height: 620px;
+    }
+
+    .phone {
+      width: 260px; height: 540px;
+      background: var(--surface);
+      border-radius: 40px;
+      border: 1.5px solid rgba(255,255,255,0.1);
+      box-shadow:
+        0 40px 80px rgba(0,0,0,0.6),
+        0 0 0 1px rgba(255,255,255,0.04),
+        inset 0 1px 0 rgba(255,255,255,0.08);
+      overflow: hidden;
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .phone-notch {
+      width: 100px; height: 28px;
+      background: var(--bg);
+      border-radius: 0 0 18px 18px;
+      margin: 0 auto;
+      position: relative; z-index: 2;
+    }
+
+    .phone-screen {
+      padding: 0 16px 16px;
+      height: calc(100% - 28px);
+      display: flex; flex-direction: column; gap: 10px;
+    }
+
+    .app-bar {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 12px 0 4px;
+    }
+    .app-bar-title {
+      font-size: 0.9rem; font-weight: 700; color: var(--text);
+    }
+    .app-bar-icons { display: flex; gap: 10px; }
+    .app-bar-icon {
+      width: 28px; height: 28px; border-radius: 8px;
+      background: var(--surface2); border: 1px solid var(--border);
+    }
+
+    .feed-card {
+      flex: 1;
+      background: var(--surface2);
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .feed-card-photo {
+      height: 55%;
+      background: linear-gradient(160deg, #1a1535, #0e0e25);
+      position: relative;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    /* Abstract person silhouette */
+    .feed-card-photo::before {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 50%; transform: translateX(-50%);
+      width: 80px; height: 100px;
+      background: linear-gradient(to top, #1e1c3a, transparent);
+      border-radius: 40px 40px 0 0;
+    }
+    .silhouette-head {
+      width: 42px; height: 42px; border-radius: 50%;
+      background: linear-gradient(135deg, #2a2550, #1c1a3a);
+      border: 1.5px solid rgba(255,255,255,0.08);
+      position: absolute; top: 30%;
+    }
+    .silhouette-body {
+      width: 68px; height: 56px;
+      background: linear-gradient(to top, rgba(20,18,50,0.9), transparent);
+      border-radius: 36px 36px 0 0;
+      position: absolute; bottom: 0;
+    }
+
+    .compat-badge {
+      position: absolute; top: 10px; right: 10px;
+      background: rgba(92,68,255,0.9);
+      backdrop-filter: blur(8px);
+      border-radius: 8px; padding: 4px 10px;
+      font-size: 0.7rem; font-weight: 700; color: #fff;
+    }
+
+    .feed-card-info {
+      padding: 14px;
+    }
+    .feed-name {
+      font-size: 0.95rem; font-weight: 700; color: var(--text); margin-bottom: 6px;
+    }
+    .feed-location { font-size: 0.7rem; color: var(--sub); margin-bottom: 10px; }
+
+    .compat-row {
+      display: flex; align-items: center; gap: 8px; margin-bottom: 10px;
+    }
+    .compat-label { font-size: 0.65rem; color: var(--sub); flex-shrink: 0; }
+    .compat-bar-wrap {
+      flex: 1; height: 4px; background: var(--border); border-radius: 2px; overflow: hidden;
+    }
+    .compat-bar-fill {
+      height: 100%; width: 91%; background: linear-gradient(to right, var(--accent), #9977ff);
+      border-radius: 2px;
+    }
+    .compat-pct { font-size: 0.65rem; font-weight: 700; color: var(--accent); flex-shrink: 0; }
+
+    .interest-chips { display: flex; gap: 5px; flex-wrap: wrap; }
+    .chip {
+      font-size: 0.6rem; padding: 3px 8px; border-radius: 4px;
+      background: var(--surface); border: 1px solid var(--border);
+      color: var(--sub); white-space: nowrap;
+    }
+
+    .feed-actions {
+      display: flex; gap: 8px; padding: 0 16px 16px;
+    }
+    .action-btn {
+      flex: 1; height: 44px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; border: 1px solid var(--border);
+    }
+    .action-btn.skip { background: var(--surface2); }
+    .action-btn.like { background: rgba(92,68,255,0.15); border-color: rgba(92,68,255,0.3); }
+
+    /* Second phone (couples) */
+    .phone-secondary {
+      width: 220px; height: 460px;
+      position: absolute;
+      right: -20px; bottom: 0;
+      border-radius: 34px;
+      background: #0b0b1e;
+      border: 1.5px solid rgba(255,255,255,0.07);
+      box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+      overflow: hidden;
+      z-index: -1;
+    }
+
+    .couple-screen {
+      padding: 24px 14px 14px;
+      height: 100%;
+      display: flex; flex-direction: column; gap: 10px;
+    }
+
+    .couple-header {
+      text-align: center;
+    }
+    .couple-hearts { font-size: 1.2rem; margin-bottom: 4px; }
+    .couple-names { font-size: 0.75rem; font-weight: 700; color: var(--text); }
+    .couple-since { font-size: 0.6rem; color: var(--sub); margin-top: 2px; }
+
+    .couple-stats {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 6px;
+    }
+    .couple-stat {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 10px; padding: 8px;
+    }
+    .couple-stat-num {
+      font-size: 1rem; font-weight: 800;
+      color: var(--pink);
+    }
+    .couple-stat-label { font-size: 0.55rem; color: var(--sub); margin-top: 1px; }
+
+    .couple-widgets { display: flex; flex-direction: column; gap: 6px; flex: 1; }
+    .couple-widget {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 10px; padding: 10px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .widget-icon {
+      width: 28px; height: 28px; border-radius: 8px;
+      background: rgba(255,77,109,0.12);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.8rem; flex-shrink: 0;
+    }
+    .widget-text {}
+    .widget-title { font-size: 0.65rem; font-weight: 600; color: var(--text); }
+    .widget-sub { font-size: 0.55rem; color: var(--sub); margin-top: 1px; }
+
+    /* Glow behind phones */
+    .hero-glow {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      pointer-events: none;
+    }
+    .glow-accent { width: 300px; height: 300px; background: rgba(92,68,255,0.12); bottom: 60px; left: 50%; transform: translateX(-30%); }
+    .glow-pink { width: 200px; height: 200px; background: rgba(255,77,109,0.08); bottom: 20px; right: 10%; }
+
+    /* ─── TRUST BAR ─── */
+    .trust {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 28px 6vw;
+      display: flex; align-items: center;
+      justify-content: center; gap: 48px; flex-wrap: wrap;
+      background: var(--bg2);
+      position: relative; z-index: 1;
+    }
+
+    .trust-label { font-size: 0.75rem; color: var(--muted); letter-spacing: 0.5px; }
+
+    .trust-items { display: flex; gap: 40px; align-items: center; flex-wrap: wrap; }
+
+    .trust-item {
+      display: flex; align-items: center; gap: 10px;
+      color: var(--sub); font-size: 0.85rem; font-weight: 500;
+    }
+
+    .trust-icon {
+      width: 28px; height: 28px;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0.7;
+    }
+
+    /* ─── FEATURES ─── */
+    .features {
+      padding: 120px 6vw;
+      max-width: 1320px; margin: 0 auto;
+    }
+
+    .features-header {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 48px; align-items: end;
+      margin-bottom: 72px;
+    }
+
+    .features-header h2 {
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 800;
+    }
+
+    .features-header p {
+      font-size: 1rem; line-height: 1.75; color: var(--sub);
+    }
+
+    .features-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1px; background: var(--border);
+      border-radius: 20px; overflow: hidden;
+    }
+
+    .feature {
+      background: var(--surface); padding: 40px;
+      transition: background 0.2s;
+    }
+    .feature:hover { background: var(--surface2); }
+
+    .feature-num {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 2px;
+      color: var(--muted); margin-bottom: 24px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .feature h3 {
+      font-size: 1.1rem; font-weight: 700; margin-bottom: 12px;
+      letter-spacing: -0.3px;
+    }
+
+    .feature p {
+      font-size: 0.875rem; line-height: 1.7; color: var(--sub);
+    }
+
+    .feature-highlight {
+      margin-top: 20px; padding-top: 20px;
+      border-top: 1px solid var(--border);
+      font-size: 0.8rem; color: var(--accent); font-weight: 500;
+    }
+
+    /* ─── SCREENS SECTION ─── */
+    .screens {
+      padding: 0 6vw 120px;
+      max-width: 1320px; margin: 0 auto;
+    }
+
+    .screens-header { text-align: center; margin-bottom: 64px; }
+    .screens-header h2 { font-size: clamp(1.8rem, 3vw, 2.6rem); font-weight: 800; margin-bottom: 14px; }
+    .screens-header p { color: var(--sub); font-size: 1rem; max-width: 520px; margin: 0 auto; }
+
+    .screens-row {
+      display: flex; align-items: flex-end; justify-content: center;
+      gap: 20px;
+    }
+
+    .screen-item { text-align: center; }
+    .screen-label {
+      font-size: 0.75rem; color: var(--sub); margin-top: 20px;
+      font-weight: 500; letter-spacing: 0.3px;
+    }
+
+    /* Match screen phone */
+    .match-phone {
+      width: 240px; height: 500px;
+      background: var(--surface);
+      border-radius: 36px;
+      border: 1.5px solid rgba(255,255,255,0.1);
+      box-shadow: 0 40px 80px rgba(0,0,0,0.5), 0 0 60px rgba(92,68,255,0.12);
+      overflow: hidden;
+    }
+
+    .match-phone-sm {
+      width: 200px; height: 440px;
+      border-radius: 30px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+    }
+
+    .match-screen {
+      height: 100%;
+      background: linear-gradient(160deg, #0e0e22 0%, #0a0a1a 100%);
+      display: flex; flex-direction: column; align-items: center;
+      justify-content: center; padding: 24px;
       gap: 16px;
     }
 
-    .footer-logo {
-      font-weight: 700;
-      background: var(--grad);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+    .match-avatars {
+      display: flex; align-items: center; gap: 0; margin-bottom: 4px;
     }
+    .match-avatar {
+      width: 64px; height: 64px; border-radius: 50%;
+      background: linear-gradient(135deg, #2a2550, #1c1a3a);
+      border: 2px solid var(--bg);
+    }
+    .match-avatar:first-child { transform: translateX(10px); z-index: 1; }
+    .match-avatar:last-child { transform: translateX(-10px); }
+
+    .match-heart {
+      position: absolute;
+      width: 28px; height: 28px; background: var(--pink);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 0.75rem; border: 2px solid var(--bg);
+    }
+
+    .match-title {
+      font-size: 1.2rem; font-weight: 800; color: var(--text); text-align: center;
+    }
+    .match-sub { font-size: 0.75rem; color: var(--sub); text-align: center; line-height: 1.5; }
+
+    .match-interests {
+      width: 100%; background: var(--surface2);
+      border: 1px solid var(--border); border-radius: 14px; padding: 14px;
+    }
+    .match-interests-title { font-size: 0.65rem; font-weight: 600; color: var(--muted); margin-bottom: 8px; letter-spacing: 1px; text-transform: uppercase; }
+    .match-interests-chips { display: flex; flex-wrap: wrap; gap: 5px; }
+
+    .match-actions { display: flex; flex-direction: column; gap: 8px; width: 100%; }
+    .match-btn {
+      width: 100%; padding: 11px; border-radius: 10px; border: none;
+      font-size: 0.8rem; font-weight: 700; cursor: pointer; text-align: center;
+    }
+    .match-btn-primary { background: var(--accent); color: #fff; }
+    .match-btn-ghost { background: var(--surface2); color: var(--sub); border: 1px solid var(--border); }
+
+    /* Chat screen */
+    .chat-screen {
+      height: 100%;
+      display: flex; flex-direction: column;
+      background: var(--surface);
+    }
+
+    .chat-header {
+      padding: 20px 14px 12px;
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .chat-ava {
+      width: 34px; height: 34px; border-radius: 50%;
+      background: linear-gradient(135deg, #2a2550, #1c1a3a);
+      flex-shrink: 0; position: relative;
+    }
+    .online-dot {
+      width: 8px; height: 8px; background: #22c55e;
+      border-radius: 50%; position: absolute; bottom: 0; right: 0;
+      border: 1.5px solid var(--surface);
+    }
+    .chat-name { font-size: 0.8rem; font-weight: 700; color: var(--text); }
+    .chat-status { font-size: 0.6rem; color: #22c55e; }
+    .compat-mini {
+      margin-left: auto;
+      font-size: 0.65rem; font-weight: 700; color: var(--accent);
+      background: rgba(92,68,255,0.1); padding: 3px 8px;
+      border-radius: 6px;
+    }
+
+    .chat-messages {
+      flex: 1; padding: 12px; display: flex; flex-direction: column; gap: 8px;
+      overflow: hidden;
+    }
+    .msg {
+      max-width: 75%; font-size: 0.65rem; line-height: 1.5;
+      padding: 8px 10px; border-radius: 10px;
+    }
+    .msg-in {
+      background: var(--surface2); color: var(--text);
+      border-radius: 10px 10px 10px 2px;
+      align-self: flex-start;
+    }
+    .msg-out {
+      background: rgba(92,68,255,0.2); color: var(--text);
+      border-radius: 10px 10px 2px 10px;
+      align-self: flex-end;
+    }
+
+    .chat-input-row {
+      padding: 10px 12px;
+      display: flex; gap: 6px; align-items: center;
+      border-top: 1px solid var(--border);
+    }
+    .chat-input-box {
+      flex: 1; height: 32px; background: var(--surface2);
+      border-radius: 8px; border: 1px solid var(--border);
+    }
+    .chat-send {
+      width: 32px; height: 32px; border-radius: 8px;
+      background: var(--accent); flex-shrink: 0;
+    }
+
+    /* ─── INTEGRATIONS ─── */
+    .integrations {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 120px 6vw;
+    }
+
+    .integrations-inner { max-width: 1320px; margin: 0 auto; }
+
+    .integrations-layout {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 80px; align-items: center;
+    }
+
+    .integrations-copy h2 {
+      font-size: clamp(1.8rem, 3vw, 2.6rem); font-weight: 800;
+      margin-bottom: 16px;
+    }
+
+    .integrations-copy p {
+      font-size: 1rem; color: var(--sub); line-height: 1.75;
+      margin-bottom: 40px;
+    }
+
+    .integration-cards { display: flex; flex-direction: column; gap: 12px; }
+
+    .int-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 14px; padding: 20px 24px;
+      display: flex; align-items: center; gap: 18px;
+      transition: border-color 0.2s;
+    }
+    .int-card:hover { border-color: rgba(92,68,255,0.3); }
+
+    .int-icon {
+      width: 44px; height: 44px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; font-size: 1.2rem;
+      background: var(--surface2); border: 1px solid var(--border);
+    }
+
+    .int-info { flex: 1; }
+    .int-name { font-size: 0.9rem; font-weight: 700; color: var(--text); margin-bottom: 3px; }
+    .int-desc { font-size: 0.8rem; color: var(--sub); line-height: 1.5; }
+
+    .int-status {
+      font-size: 0.65rem; font-weight: 600;
+      padding: 3px 10px; border-radius: 6px;
+      background: rgba(92,68,255,0.1); color: var(--accent);
+      flex-shrink: 0;
+    }
+
+    /* Visual: stacked cards with integration data */
+    .integrations-visual {
+      position: relative; height: 380px;
+    }
+
+    .data-card {
+      position: absolute;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 16px; padding: 18px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    }
+
+    .data-card-steam {
+      width: 240px; left: 0; top: 0;
+    }
+    .data-card-spotify {
+      width: 230px; right: 0; top: 60px;
+      z-index: 1;
+    }
+    .data-card-kp {
+      width: 220px; left: 30px; bottom: 0;
+      z-index: 2;
+    }
+
+    .dc-header {
+      display: flex; align-items: center; gap: 10px; margin-bottom: 14px;
+    }
+    .dc-icon {
+      width: 30px; height: 30px; border-radius: 8px;
+      background: var(--surface2); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.85rem;
+    }
+    .dc-title { font-size: 0.75rem; font-weight: 700; color: var(--text); }
+    .dc-sub { font-size: 0.6rem; color: var(--sub); }
+
+    .dc-items { display: flex; flex-direction: column; gap: 6px; }
+    .dc-item {
+      display: flex; align-items: center; justify-content: space-between;
+      font-size: 0.7rem;
+    }
+    .dc-item-name { color: var(--sub); }
+    .dc-item-val { color: var(--text); font-weight: 600; font-size: 0.65rem; }
+
+    .dc-bar-row { display: flex; flex-direction: column; gap: 5px; }
+    .dc-bar-item { display: flex; align-items: center; gap: 8px; }
+    .dc-bar-label { font-size: 0.65rem; color: var(--sub); width: 60px; flex-shrink: 0; }
+    .dc-bar-track { flex: 1; height: 3px; background: var(--border); border-radius: 2px; }
+    .dc-bar-fill { height: 100%; border-radius: 2px; background: #1db954; }
+    .dc-bar-fill.kp { background: #ff6600; }
+
+    /* ─── COUPLES ─── */
+    .couples {
+      padding: 120px 6vw;
+      max-width: 1320px; margin: 0 auto;
+    }
+
+    .couples-layout {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 80px; align-items: start;
+    }
+
+    .couples-copy h2 {
+      font-size: clamp(1.8rem, 3vw, 2.6rem); font-weight: 800; margin-bottom: 16px;
+    }
+
+    .couples-copy p {
+      font-size: 1rem; color: var(--sub); line-height: 1.75; margin-bottom: 40px;
+    }
+
+    .couples-features { display: flex; flex-direction: column; gap: 24px; }
+
+    .couples-feat {
+      display: flex; gap: 18px; align-items: flex-start;
+    }
+
+    .couples-feat-icon {
+      width: 40px; height: 40px; border-radius: 10px;
+      background: rgba(255,77,109,0.08); border: 1px solid rgba(255,77,109,0.15);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; flex-shrink: 0; margin-top: 2px;
+    }
+
+    .couples-feat h4 { font-size: 0.9rem; font-weight: 700; margin-bottom: 4px; }
+    .couples-feat p { font-size: 0.825rem; color: var(--sub); line-height: 1.6; }
+
+    .couples-grid-visual {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+    }
+
+    .cg-tile {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 16px; padding: 20px;
+    }
+
+    .cg-tile.tall { grid-row: span 2; }
+    .cg-tile.pink-tint { background: rgba(255,77,109,0.04); border-color: rgba(255,77,109,0.12); }
+
+    .cg-icon { font-size: 1.3rem; margin-bottom: 10px; }
+    .cg-title { font-size: 0.8rem; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+    .cg-desc { font-size: 0.7rem; color: var(--sub); line-height: 1.5; }
+
+    .cg-mini-chart {
+      margin-top: 14px; display: flex; align-items: flex-end; gap: 4px; height: 36px;
+    }
+    .cg-bar {
+      flex: 1; background: rgba(255,77,109,0.25); border-radius: 3px;
+    }
+
+    /* ─── CTA ─── */
+    .cta-section {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      padding: 120px 6vw;
+      text-align: center;
+    }
+
+    .cta-inner { max-width: 580px; margin: 0 auto; }
+
+    .cta-section h2 {
+      font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 900;
+      letter-spacing: -1.5px; margin-bottom: 16px;
+    }
+
+    .cta-section p {
+      color: var(--sub); font-size: 1rem; line-height: 1.75; margin-bottom: 40px;
+    }
+
+    .waitlist-form {
+      display: flex; gap: 10px; max-width: 440px; margin: 0 auto 16px;
+    }
+
+    .waitlist-input {
+      flex: 1; background: var(--surface); border: 1px solid var(--border2);
+      border-radius: 10px; padding: 13px 18px; font-size: 0.9rem;
+      color: var(--text); outline: none; font-family: inherit;
+      transition: border-color 0.2s;
+    }
+    .waitlist-input:focus { border-color: var(--accent); }
+    .waitlist-input::placeholder { color: var(--muted); }
+
+    .waitlist-form .btn-primary { white-space: nowrap; }
+
+    .cta-note { font-size: 0.78rem; color: var(--muted); }
+
+    /* ─── FOOTER ─── */
+    footer {
+      border-top: 1px solid var(--border); padding: 32px 6vw;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 16px; position: relative; z-index: 1;
+    }
+
+    .footer-logo { font-size: 0.95rem; font-weight: 700; color: var(--text); }
+    .footer-logo span { color: var(--accent); }
 
     .footer-links {
-      display: flex;
-      gap: 24px;
-      list-style: none;
+      display: flex; gap: 24px; list-style: none; flex-wrap: wrap;
     }
-
     .footer-links a {
-      color: var(--muted);
-      text-decoration: none;
-      font-size: 0.85rem;
-      transition: color 0.2s;
+      font-size: 0.8rem; color: var(--sub); text-decoration: none;
+      transition: color 0.15s;
     }
-
     .footer-links a:hover { color: var(--text); }
 
-    .footer-copy {
-      font-size: 0.8rem;
-      color: var(--muted);
-    }
+    .footer-copy { font-size: 0.75rem; color: var(--muted); }
 
-    /* ── GLOW BLOBS ── */
-    .blob {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(120px);
-      pointer-events: none;
-      z-index: 0;
-    }
-    .blob-purple {
-      width: 600px; height: 600px;
-      background: rgba(124,92,252,0.12);
-    }
-    .blob-pink {
-      width: 400px; height: 400px;
-      background: rgba(224,81,110,0.1);
-    }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 768px) {
-      .nav-links { display: none; }
-      .problem-grid { grid-template-columns: 1fr; }
-      .integrations-list { grid-template-columns: 1fr; }
-      .waitlist-form { flex-direction: column; }
-      .waitlist-form input { border-radius: 14px; }
-      .waitlist-form button { border-radius: 14px; }
-      .hero-stats { gap: 28px; }
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; text-align: center; padding-top: 100px; }
+      .hero-copy { padding-right: 0; }
+      .hero-actions { justify-content: center; }
+      .hero-meta { justify-content: center; }
+      .hero-visual { height: 420px; margin-top: 40px; }
+      .phone-secondary { display: none; }
+      .features-header { grid-template-columns: 1fr; }
+      .features-grid { grid-template-columns: 1fr; }
+      .screens-row { flex-direction: column; align-items: center; }
+      .integrations-layout { grid-template-columns: 1fr; }
+      .integrations-visual { display: none; }
+      .couples-layout { grid-template-columns: 1fr; }
+      .nav-center { display: none; }
       footer { flex-direction: column; text-align: center; }
-    }
-
-    /* ── ANIMATE ON SCROLL ── */
-    .fade-up {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
-    }
-    .fade-up.visible {
-      opacity: 1;
-      transform: translateY(0);
     }
   </style>
 </head>
 <body>
 
-<canvas id="bg-canvas"></canvas>
-
 <!-- NAV -->
 <nav>
-  <div class="logo">SoulMates</div>
-  <ul class="nav-links">
-    <li><a href="#features">Возможности</a></li>
+  <a href="/" class="logo">Soul<span>Mates</span></a>
+  <ul class="nav-center">
+    <li><a href="#features">О сервисе</a></li>
     <li><a href="#integrations">Интеграции</a></li>
-    <li><a href="#how">Как это работает</a></li>
+    <li><a href="#couples">Режим пары</a></li>
   </ul>
-  <a href="#waitlist" class="nav-cta">Ранний доступ</a>
+  <div class="nav-right">
+    <a href="https://soulmates.com.ru/login" class="btn-sm">Войти</a>
+    <a href="#waitlist" class="btn-sm btn-accent">Ранний доступ</a>
+  </div>
 </nav>
 
 <!-- HERO -->
-<section class="hero">
-  <div class="blob blob-purple" style="top:-200px;left:-200px;"></div>
-  <div class="blob blob-pink" style="top:100px;right:-100px;"></div>
+<div style="max-width:1320px;margin:0 auto;padding:0 6vw;">
+  <section class="hero" style="padding:0;margin:0;">
+    <div class="hero-copy reveal">
+      <div class="hero-eyebrow">Закрытое бета-тестирование открыто</div>
 
-  <div class="hero-badge">
-    <svg width="8" height="8" viewBox="0 0 8 8"><circle cx="4" cy="4" r="4" fill="#7c5cfc"/></svg>
-    Закрытое бета-тестирование открыто
-    <span>· soulmates.com.ru</span>
-  </div>
+      <h1>Находи людей,<br>а не <span class="accent">фотографии.</span></h1>
 
-  <h1>Не листай людей.<br><em>Находи своих.</em></h1>
+      <p class="hero-desc">
+        Совместимость на основе Steam-библиотеки, Spotify-вкуса и оценок на Кинопоиске.
+        Без анкет. Без лотереи свайпов.
+      </p>
 
-  <p class="hero-sub">
-    Совместимость на основе того, что ты реально слушаешь, смотришь и во что играешь.
-    Без анкет. Без фильтров "рост от 180". Без алгоритмов тиндера.
-  </p>
+      <div class="hero-actions">
+        <a href="#waitlist" class="btn-primary">Попасть в бету</a>
+        <a href="#features" class="btn-outline">Узнать больше</a>
+      </div>
 
-  <div class="hero-actions">
-    <a href="#waitlist" class="btn-primary">Попасть в бету →</a>
-    <a href="#how" class="btn-ghost">Как это работает</a>
-  </div>
-
-  <div class="hero-stats">
-    <div class="stat">
-      <div class="stat-num">3</div>
-      <div class="stat-label">интеграции с жизнью</div>
+      <div class="hero-meta">
+        <div class="hero-meta-item">
+          <strong>ML</strong>
+          <span>Алгоритм совместимости</span>
+        </div>
+        <div class="hero-meta-item">
+          <strong>3</strong>
+          <span>Интеграции с жизнью</span>
+        </div>
+        <div class="hero-meta-item">
+          <strong>0+</strong>
+          <span>Режимов после матча</span>
+        </div>
+      </div>
     </div>
-    <div class="stat">
-      <div class="stat-num">ML</div>
-      <div class="stat-label">алгоритм совместимости</div>
-    </div>
-    <div class="stat">
-      <div class="stat-num">0</div>
-      <div class="stat-label">случайных свайпов</div>
-    </div>
-  </div>
-</section>
 
-<div class="section-divider"><span>Почему не тиндер</span></div>
+    <div class="hero-visual reveal" style="transition-delay:0.15s">
+      <div class="hero-glow glow-accent"></div>
+      <div class="hero-glow glow-pink"></div>
 
-<!-- PROBLEM -->
-<div class="problem fade-up">
-  <div class="problem-grid">
-    <div class="problem-card bad">
-      <h3>Обычный дейтинг</h3>
-      <ul>
-        <li>Фото + пара строк биографии</li>
-        <li>Алгоритм решает за тебя кто "подходит"</li>
-        <li>100 матчей — 0 разговоров</li>
-        <li>Ты не знаешь человека до встречи</li>
-        <li>Общие интересы ищешь сам в чате</li>
-      </ul>
+      <!-- Main phone: Feed -->
+      <div class="phone">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+          <div class="app-bar">
+            <div class="app-bar-title">SoulMates</div>
+            <div class="app-bar-icons">
+              <div class="app-bar-icon"></div>
+              <div class="app-bar-icon"></div>
+            </div>
+          </div>
+
+          <div class="feed-card">
+            <div class="feed-card-photo">
+              <div class="silhouette-head"></div>
+              <div class="silhouette-body"></div>
+              <div class="compat-badge">91% совм.</div>
+            </div>
+            <div class="feed-card-info">
+              <div class="feed-name">Алина, 23</div>
+              <div class="feed-location">Москва · 3.2 км</div>
+              <div class="compat-row">
+                <div class="compat-label">Совместимость</div>
+                <div class="compat-bar-wrap"><div class="compat-bar-fill"></div></div>
+                <div class="compat-pct">91%</div>
+              </div>
+              <div class="interest-chips">
+                <div class="chip">The Witcher 3</div>
+                <div class="chip">Radiohead</div>
+                <div class="chip">Интерстеллар</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="feed-actions">
+            <div class="action-btn skip">✕</div>
+            <div class="action-btn like">♥</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Secondary phone: Couples -->
+      <div class="phone-secondary">
+        <div class="couple-screen">
+          <div class="couple-header">
+            <div class="couple-hearts">♥</div>
+            <div class="couple-names">Макс & Алина</div>
+            <div class="couple-since">вместе 47 дней</div>
+          </div>
+
+          <div class="couple-stats">
+            <div class="couple-stat">
+              <div class="couple-stat-num">12</div>
+              <div class="couple-stat-label">событий</div>
+            </div>
+            <div class="couple-stat">
+              <div class="couple-stat-num">4</div>
+              <div class="couple-stat-label">цели</div>
+            </div>
+          </div>
+
+          <div class="couple-widgets">
+            <div class="couple-widget">
+              <div class="widget-icon">📅</div>
+              <div class="widget-text">
+                <div class="widget-title">Свидание в пятницу</div>
+                <div class="widget-sub">через 3 дня</div>
+              </div>
+            </div>
+            <div class="couple-widget">
+              <div class="widget-icon">🎬</div>
+              <div class="widget-text">
+                <div class="widget-title">Dune: Part Two</div>
+                <div class="widget-sub">в вишлисте у обоих</div>
+              </div>
+            </div>
+            <div class="couple-widget">
+              <div class="widget-icon">✓</div>
+              <div class="widget-text">
+                <div class="widget-title">3 из 5 задач</div>
+                <div class="widget-sub">на эту неделю</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="problem-card good">
-      <h3>SoulMates</h3>
-      <ul>
-        <li>Профиль строится из реальных данных</li>
-        <li>ML считает совместимость по интересам</li>
-        <li>Меньше матчей, но каждый — осознанный</li>
-        <li>Общий плейлист и игры ещё до встречи</li>
-        <li>Режим пары: после матча жизнь не заканчивается</li>
-      </ul>
+  </section>
+</div>
+
+<!-- TRUST BAR -->
+<div class="trust reveal">
+  <span class="trust-label">Работает с</span>
+  <div class="trust-items">
+    <div class="trust-item">
+      <div class="trust-icon">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none">
+          <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" fill="#1db954"/>
+          <path d="M8.5 13.5l2-2 1.5 1.5 3-3" stroke="#1db954" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      Spotify
+    </div>
+    <div class="trust-item">
+      <div class="trust-icon">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none">
+          <rect x="2" y="3" width="20" height="14" rx="2" stroke="#4a90d9" stroke-width="1.5"/>
+          <path d="M2 7h20" stroke="#4a90d9" stroke-width="1.5"/>
+          <path d="M12 17l-3 4m3-4l3 4" stroke="#4a90d9" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      Steam
+    </div>
+    <div class="trust-item">
+      <div class="trust-icon">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none">
+          <circle cx="12" cy="12" r="9" stroke="#ff6600" stroke-width="1.5"/>
+          <path d="M8 12l2.5 2.5L16 9" stroke="#ff6600" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      Кинопоиск
+    </div>
+    <div class="trust-item">
+      <div class="trust-icon">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none">
+          <path d="M4 4l7.5 7.5L4 19" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="M12 19h8" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      Google / VK OAuth
+    </div>
+    <div class="trust-item">
+      <div class="trust-icon">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none">
+          <path d="M12 3L3 7v5c0 5.25 3.75 10.15 9 11.35C17.25 22.15 21 17.25 21 12V7l-9-4z" stroke="#5c44ff" stroke-width="1.5"/>
+        </svg>
+      </div>
+      YooKassa
     </div>
   </div>
 </div>
 
 <!-- FEATURES -->
 <section class="features" id="features">
-  <div class="section-header fade-up">
-    <div class="section-tag">Возможности</div>
-    <h2>Всё что нужно, ничего лишнего</h2>
-    <p>Фичи, которые появились потому что они нужны, а не чтобы добавить пункт в маркетинговый список.</p>
+  <div class="features-header reveal">
+    <div>
+      <div class="tag">Почему SoulMates</div>
+      <h2>Меньше случайных<br>совпадений.</h2>
+    </div>
+    <p>
+      Обычный дейтинг работает на охват — больше профилей, больше свайпов. Мы работаем на точность:
+      каждый матч основан на реальных данных, а не на красивом фото.
+    </p>
   </div>
 
-  <div class="features-grid">
-    <div class="feature-card fade-up">
-      <div class="feature-icon purple">🧠</div>
-      <h3>ML совместимость</h3>
-      <p>Алгоритм анализирует твои реальные интересы — музыку, игры, фильмы — и считает процент совместимости до того, как вы напишете первое сообщение.</p>
+  <div class="features-grid reveal">
+    <div class="feature">
+      <div class="feature-num">01</div>
+      <h3>ML-совместимость</h3>
+      <p>
+        Алгоритм строит векторное представление твоих интересов по данным из подключённых сервисов
+        и вычисляет процент совместимости до того, как вы написали первое слово.
+      </p>
+      <div class="feature-highlight">Видишь % ещё до свайпа</div>
     </div>
-    <div class="feature-card fade-up">
-      <div class="feature-icon pink">💬</div>
-      <h3>Живой чат</h3>
-      <p>WebSocket-чат в реальном времени. Без задержек, без обновления страницы. Просто разговор.</p>
-    </div>
-    <div class="feature-card fade-up">
-      <div class="feature-icon cyan">📹</div>
-      <h3>Видеозвонки</h3>
-      <p>WebRTC прямо в браузере. Встреча перед встречей — без лишних приложений.</p>
-    </div>
-    <div class="feature-card fade-up">
-      <div class="feature-icon green">💑</div>
+    <div class="feature">
+      <div class="feature-num">02</div>
       <h3>Режим пары</h3>
-      <p>Матч — это начало. Общий вишлист, календарь, задачи для пары, совместные расходы. Помогает не потерять друг друга в буднях.</p>
+      <p>
+        Матч — это не конец воронки. Совместный календарь, вишлист, задачи, расходы, фотоальбом
+        и карта воспоминаний. Всё чтобы оставаться вместе после первого свидания.
+      </p>
+      <div class="feature-highlight">11 инструментов для пары</div>
     </div>
-    <div class="feature-card fade-up">
-      <div class="feature-icon orange">🛡️</div>
-      <h3>Антидокс по умолчанию</h3>
-      <p>Точный возраст, геолокация и ссылки в профиле скрыты. EXIF из фото вычищается автоматически. Кнопка экстренного скрытия профиля.</p>
+    <div class="feature">
+      <div class="feature-num">03</div>
+      <h3>Приватность по умолчанию</h3>
+      <p>
+        Точный возраст и геолокация скрыты. EXIF из фото вычищается автоматически.
+        Режим инкогнито — профиль виден только тем, кого ты лайкнул. Кнопка экстренного скрытия.
+      </p>
+      <div class="feature-highlight">Anti-doxx архитектура</div>
     </div>
-    <div class="feature-card fade-up">
-      <div class="feature-icon gold">✨</div>
-      <h3>Бусты и Premium</h3>
-      <p>Хочешь больше видимости? Буст на несколько часов, без платной подписки навсегда. Платишь за результат, не за доступ.</p>
+  </div>
+</section>
+
+<!-- SCREENS -->
+<section class="screens" id="screens">
+  <div class="screens-header reveal">
+    <div class="tag">Приложение</div>
+    <h2>Как это выглядит изнутри</h2>
+    <p>Лента, матч, чат — и режим пары, куда хочется возвращаться.</p>
+  </div>
+
+  <div class="screens-row reveal">
+    <!-- Feed screen -->
+    <div class="screen-item">
+      <div class="match-phone match-phone-sm" style="background:var(--surface);">
+        <div style="height:100%;display:flex;flex-direction:column;">
+          <div style="padding:20px 14px 10px;border-bottom:1px solid var(--border);">
+            <div style="font-size:0.7rem;font-weight:700;color:var(--text);">Лента</div>
+          </div>
+          <div style="flex:1;padding:12px;display:flex;flex-direction:column;gap:8px;">
+            <div style="flex:1;background:var(--surface2);border-radius:14px;position:relative;overflow:hidden;">
+              <div style="height:60%;background:linear-gradient(160deg,#1a1535,#0e0e25);display:flex;align-items:center;justify-content:center;position:relative;">
+                <div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#2a2550,#1c1a3a);"></div>
+                <div style="position:absolute;top:8px;right:8px;background:rgba(92,68,255,0.85);border-radius:6px;padding:2px 7px;font-size:0.55rem;font-weight:700;color:#fff;">91%</div>
+              </div>
+              <div style="padding:10px 12px;">
+                <div style="font-size:0.75rem;font-weight:700;color:var(--text);margin-bottom:4px;">Алина, 23</div>
+                <div style="display:flex;gap:4px;flex-wrap:wrap;">
+                  <div class="chip">Radiohead</div>
+                  <div class="chip">Dark Souls</div>
+                </div>
+              </div>
+            </div>
+            <div style="display:flex;gap:6px;">
+              <div style="flex:1;height:38px;border-radius:10px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:0.9rem;">✕</div>
+              <div style="flex:1;height:38px;border-radius:10px;background:rgba(92,68,255,0.15);border:1px solid rgba(92,68,255,0.3);display:flex;align-items:center;justify-content:center;font-size:0.9rem;">♥</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="screen-label">Лента с совместимостью</div>
+    </div>
+
+    <!-- Match screen (center) -->
+    <div class="screen-item">
+      <div class="match-phone" style="transform:translateY(-30px);">
+        <div class="match-screen">
+          <div class="match-avatars" style="position:relative;">
+            <div class="match-avatar"></div>
+            <div class="match-avatar"></div>
+          </div>
+          <div class="match-title">Это взаимно!</div>
+          <div class="match-sub">Вы оба лайкнули друг друга.<br>Начните разговор.</div>
+          <div class="match-interests">
+            <div class="match-interests-title">Общие интересы</div>
+            <div class="match-interests-chips">
+              <div class="chip">Radiohead</div>
+              <div class="chip">The Witcher 3</div>
+              <div class="chip">Интерстеллар</div>
+              <div class="chip">Инди-рок</div>
+            </div>
+          </div>
+          <div class="match-actions">
+            <div class="match-btn match-btn-primary">Написать сообщение</div>
+            <div class="match-btn match-btn-ghost">Посмотреть профиль</div>
+          </div>
+        </div>
+      </div>
+      <div class="screen-label">Матч с общими интересами</div>
+    </div>
+
+    <!-- Chat screen -->
+    <div class="screen-item">
+      <div class="match-phone match-phone-sm" style="background:var(--surface);">
+        <div class="chat-screen">
+          <div class="chat-header">
+            <div class="chat-ava">
+              <div class="online-dot"></div>
+            </div>
+            <div>
+              <div class="chat-name">Алина</div>
+              <div class="chat-status">онлайн</div>
+            </div>
+            <div class="compat-mini">91%</div>
+          </div>
+          <div class="chat-messages">
+            <div class="msg msg-in">Привет! Вижу ты тоже в The Witcher играл?</div>
+            <div class="msg msg-out">Да, 200+ часов :) Какую концовку взял?</div>
+            <div class="msg msg-in">Цири ведьмак, единственная правильная)</div>
+            <div class="msg msg-out">О, мы совпали и тут</div>
+          </div>
+          <div class="chat-input-row">
+            <div class="chat-input-box"></div>
+            <div class="chat-send"></div>
+          </div>
+        </div>
+      </div>
+      <div class="screen-label">Чат в реальном времени</div>
     </div>
   </div>
 </section>
@@ -767,64 +1183,175 @@
 <!-- INTEGRATIONS -->
 <section class="integrations" id="integrations">
   <div class="integrations-inner">
-    <div class="section-header fade-up">
-      <div class="section-tag">Интеграции</div>
-      <h2>Твоя жизнь — твой профиль</h2>
-      <p>Не заполняй анкету. Подключи сервисы которыми уже пользуешься — профиль заполнится сам.</p>
-    </div>
+    <div class="integrations-layout">
+      <div class="integrations-copy reveal">
+        <div class="tag">Интеграции</div>
+        <h2>Профиль из того, чем ты живёшь.</h2>
+        <p>
+          Подключи сервисы которыми уже пользуешься — профиль заполнится сам.
+          Никаких вопросов "назови три своих интереса".
+        </p>
 
-    <div class="integrations-list">
-      <div class="integration-card fade-up">
-        <div class="integration-logo">🎮</div>
-        <h3>Steam</h3>
-        <p>Библиотека игр, часы в каждой, любимые жанры. Сразу видно с кем у тебя одни 2000 часов в одной игре.</p>
-        <div class="integration-tag">Подключено</div>
+        <div class="integration-cards">
+          <div class="int-card">
+            <div class="int-icon">🎵</div>
+            <div class="int-info">
+              <div class="int-name">Spotify</div>
+              <div class="int-desc">Топ-треки, любимые артисты, жанры за последние месяцы — через OAuth 2.0.</div>
+            </div>
+            <div class="int-status">Подключено</div>
+          </div>
+          <div class="int-card">
+            <div class="int-icon">🎮</div>
+            <div class="int-info">
+              <div class="int-name">Steam</div>
+              <div class="int-desc">Библиотека игр, часы, любимые жанры — через Steam OpenID.</div>
+            </div>
+            <div class="int-status">Подключено</div>
+          </div>
+          <div class="int-card">
+            <div class="int-icon">🎬</div>
+            <div class="int-info">
+              <div class="int-name">Кинопоиск</div>
+              <div class="int-desc">Оценки фильмов и сериалов — строит вкусовой профиль по жанрам.</div>
+            </div>
+            <div class="int-status">Подключено</div>
+          </div>
+        </div>
       </div>
-      <div class="integration-card fade-up">
-        <div class="integration-logo">🎵</div>
-        <h3>Spotify</h3>
-        <p>Топ-треки, любимые артисты, жанры за последние месяцы. Музыкальный вкус — один из сильнейших индикаторов совместимости.</p>
-        <div class="integration-tag">Подключено</div>
-      </div>
-      <div class="integration-card fade-up">
-        <div class="integration-logo">🎬</div>
-        <h3>Кинопоиск</h3>
-        <p>Оценки фильмов, любимые жанры, уже просмотренное. Узнаешь до свидания есть ли кого позвать на тот фильм что давно ждёшь.</p>
-        <div class="integration-tag">Подключено</div>
+
+      <div class="integrations-visual reveal" style="transition-delay:0.15s">
+        <!-- Steam card -->
+        <div class="data-card data-card-steam">
+          <div class="dc-header">
+            <div class="dc-icon">🎮</div>
+            <div>
+              <div class="dc-title">Steam</div>
+              <div class="dc-sub">23 игры · синхронизировано</div>
+            </div>
+          </div>
+          <div class="dc-items">
+            <div class="dc-item"><span class="dc-item-name">The Witcher 3</span><span class="dc-item-val">208 ч</span></div>
+            <div class="dc-item"><span class="dc-item-name">Dark Souls III</span><span class="dc-item-val">144 ч</span></div>
+            <div class="dc-item"><span class="dc-item-name">Hollow Knight</span><span class="dc-item-val">67 ч</span></div>
+          </div>
+        </div>
+
+        <!-- Spotify card -->
+        <div class="data-card data-card-spotify">
+          <div class="dc-header">
+            <div class="dc-icon">🎵</div>
+            <div>
+              <div class="dc-title">Spotify</div>
+              <div class="dc-sub">Топ за 6 месяцев</div>
+            </div>
+          </div>
+          <div class="dc-bar-row">
+            <div class="dc-bar-item">
+              <div class="dc-bar-label">Инди-рок</div>
+              <div class="dc-bar-track"><div class="dc-bar-fill" style="width:88%"></div></div>
+            </div>
+            <div class="dc-bar-item">
+              <div class="dc-bar-label">Электроника</div>
+              <div class="dc-bar-track"><div class="dc-bar-fill" style="width:64%"></div></div>
+            </div>
+            <div class="dc-bar-item">
+              <div class="dc-bar-label">Постпанк</div>
+              <div class="dc-bar-track"><div class="dc-bar-fill" style="width:52%"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- KP card -->
+        <div class="data-card data-card-kp">
+          <div class="dc-header">
+            <div class="dc-icon">🎬</div>
+            <div>
+              <div class="dc-title">Кинопоиск</div>
+              <div class="dc-sub">142 оценки</div>
+            </div>
+          </div>
+          <div class="dc-bar-row">
+            <div class="dc-bar-item">
+              <div class="dc-bar-label">Sci-Fi</div>
+              <div class="dc-bar-track"><div class="dc-bar-fill kp" style="width:80%"></div></div>
+            </div>
+            <div class="dc-bar-item">
+              <div class="dc-bar-label">Триллер</div>
+              <div class="dc-bar-track"><div class="dc-bar-fill kp" style="width:66%"></div></div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- HOW IT WORKS -->
-<section id="how">
-  <div class="how fade-up">
-    <div class="section-header">
-      <div class="section-tag">Как это работает</div>
-      <h2>Три шага до настоящего матча</h2>
+<!-- COUPLES MODE -->
+<section class="couples" id="couples">
+  <div class="couples-layout">
+    <div class="couples-copy reveal">
+      <div class="tag">Режим пары</div>
+      <h2>Матч — это только начало.</h2>
+      <p>
+        Большинство приложений заканчиваются на моменте "вы совпали". SoulMates начинается именно отсюда —
+        совместный инструментарий для жизни вместе.
+      </p>
+
+      <div class="couples-features">
+        <div class="couples-feat">
+          <div class="couples-feat-icon">📅</div>
+          <div>
+            <h4>Календарь и события</h4>
+            <p>Совместные планы, напоминания о важных датах, таймлайн вашей истории.</p>
+          </div>
+        </div>
+        <div class="couples-feat">
+          <div class="couples-feat-icon">🎯</div>
+          <div>
+            <h4>Испытания и задачи</h4>
+            <p>Еженедельные вызовы для пары, общий список дел, достижения которые можно разблокировать вместе.</p>
+          </div>
+        </div>
+        <div class="couples-feat">
+          <div class="couples-feat-icon">💳</div>
+          <div>
+            <h4>Совместные расходы</h4>
+            <p>Учёт общих трат, вишлист мест и вещей, карта воспоминаний с точками на ней.</p>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div class="steps">
-      <div class="step">
-        <div class="step-num">1</div>
-        <div class="step-content">
-          <h3>Регистрируешься и подключаешь сервисы</h3>
-          <p>Steam, Spotify, Кинопоиск — подключи один или все три. Чем больше данных, тем точнее алгоритм.</p>
+    <div class="couples-grid-visual reveal" style="transition-delay:0.15s">
+      <div class="cg-tile pink-tint tall">
+        <div class="cg-icon">📅</div>
+        <div class="cg-title">Июль 2025</div>
+        <div class="cg-desc">3 события запланировано. Следующее — в пятницу.</div>
+        <div class="cg-mini-chart">
+          <div class="cg-bar" style="height:40%;"></div>
+          <div class="cg-bar" style="height:70%;"></div>
+          <div class="cg-bar" style="height:90%;"></div>
+          <div class="cg-bar" style="height:50%;"></div>
+          <div class="cg-bar" style="height:80%;"></div>
+          <div class="cg-bar" style="height:30%;"></div>
+          <div class="cg-bar" style="height:65%;"></div>
         </div>
       </div>
-      <div class="step">
-        <div class="step-num">2</div>
-        <div class="step-content">
-          <h3>Алгоритм считает совместимость</h3>
-          <p>ML-модель анализирует векторы интересов. Ты видишь процент совместимости с каждым профилем — ещё до свайпа.</p>
-        </div>
+      <div class="cg-tile">
+        <div class="cg-icon">🎯</div>
+        <div class="cg-title">Задачи</div>
+        <div class="cg-desc">3 из 5 на этой неделе</div>
       </div>
-      <div class="step">
-        <div class="step-num">3</div>
-        <div class="step-content">
-          <h3>Матч — и начинается настоящее</h3>
-          <p>Чат, видео, общий плейлист и игры которые вы оба прошли. А после встречи — режим пары, который помогает оставаться вместе.</p>
-        </div>
+      <div class="cg-tile">
+        <div class="cg-icon">🏆</div>
+        <div class="cg-title">Достижения</div>
+        <div class="cg-desc">7 разблокировано</div>
+      </div>
+      <div class="cg-tile" style="grid-column:span 2;">
+        <div class="cg-icon">🗺️</div>
+        <div class="cg-title">Карта воспоминаний</div>
+        <div class="cg-desc">12 отмеченных мест — парки, кафе, маршруты.</div>
       </div>
     </div>
   </div>
@@ -832,100 +1359,58 @@
 
 <!-- CTA -->
 <section class="cta-section" id="waitlist">
-  <div class="cta-inner fade-up">
-    <div class="blob blob-purple" style="bottom:-200px;right:-200px;"></div>
-    <h2>Готов найти<br><em style="background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-style:normal;">своего человека?</em></h2>
-    <p>Закрытая бета уже идёт. Оставь email — пришлём инвайт как только откроем следующий поток.</p>
+  <div class="cta-inner reveal">
+    <div class="tag">Ранний доступ</div>
+    <h2>Готов попробовать?</h2>
+    <p>
+      Закрытая бета уже идёт. Оставь email — пришлём инвайт в следующем потоке.
+    </p>
 
-    <form class="waitlist-form" onsubmit="handleSubmit(event)">
-      <input type="email" placeholder="твой@email.ru" required id="email-input">
-      <button type="submit">Хочу →</button>
+    <form class="waitlist-form" onsubmit="onWaitlist(event)">
+      <input class="waitlist-input" type="email" placeholder="email@example.ru" required id="wl-input">
+      <button type="submit" class="btn-primary" id="wl-btn">Записаться</button>
     </form>
-    <p class="waitlist-note" id="form-note">Без спама. Только инвайт когда придёт очередь.</p>
+    <p class="cta-note" id="wl-note">Без спама. Только инвайт, когда откроем следующий поток.</p>
   </div>
 </section>
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-logo">SoulMates</div>
+  <div class="footer-logo">Soul<span>Mates</span></div>
   <ul class="footer-links">
-    <li><a href="#">Политика конфиденциальности</a></li>
-    <li><a href="#">Условия использования</a></li>
-    <li><a href="mailto:hello@soulmates.com.ru">Связаться</a></li>
+    <li><a href="https://soulmates.com.ru/legal/privacy">Политика конфиденциальности</a></li>
+    <li><a href="https://soulmates.com.ru/legal/terms">Условия использования</a></li>
+    <li><a href="mailto:hello@soulmates.com.ru">hello@soulmates.com.ru</a></li>
   </ul>
   <div class="footer-copy">© 2026 SoulMates</div>
 </footer>
 
 <script>
-  // Starfield
-  const canvas = document.getElementById('bg-canvas');
-  const ctx = canvas.getContext('2d');
-  let stars = [];
-  let W, H;
-
-  function resize() {
-    W = canvas.width = window.innerWidth;
-    H = canvas.height = window.innerHeight;
-  }
-
-  function initStars() {
-    stars = Array.from({length: 120}, () => ({
-      x: Math.random() * W,
-      y: Math.random() * H,
-      r: Math.random() * 1.2 + 0.2,
-      a: Math.random(),
-      speed: Math.random() * 0.3 + 0.05,
-      drift: (Math.random() - 0.5) * 0.15
-    }));
-  }
-
-  function drawStars() {
-    ctx.clearRect(0, 0, W, H);
-    stars.forEach(s => {
-      ctx.beginPath();
-      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(180,160,255,${s.a})`;
-      ctx.fill();
-      s.y -= s.speed;
-      s.x += s.drift;
-      s.a = 0.3 + 0.7 * Math.abs(Math.sin(Date.now() * 0.0005 + s.x));
-      if (s.y < -5) { s.y = H + 5; s.x = Math.random() * W; }
-    });
-    requestAnimationFrame(drawStars);
-  }
-
-  resize();
-  initStars();
-  drawStars();
-  window.addEventListener('resize', () => { resize(); initStars(); });
-
-  // Scroll animations
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(e => {
+  // Scroll reveal
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
       if (e.isIntersecting) {
-        e.target.classList.add('visible');
-        // stagger children
-        e.target.querySelectorAll('.fade-up').forEach((el, i) => {
-          el.style.transitionDelay = `${i * 80}ms`;
-          el.classList.add('visible');
-        });
+        e.target.style.transitionDelay = (e.target.dataset.delay || 0) + 'ms';
+        e.target.classList.add('on');
       }
     });
-  }, {threshold: 0.1});
+  }, { threshold: 0.08 });
 
-  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
-  // Waitlist form
-  function handleSubmit(e) {
+  // Waitlist
+  function onWaitlist(e) {
     e.preventDefault();
-    const btn = e.target.querySelector('button');
-    const note = document.getElementById('form-note');
-    btn.textContent = '✓ Записал';
-    btn.style.background = 'linear-gradient(135deg,#34d399,#059669)';
+    const btn = document.getElementById('wl-btn');
+    const note = document.getElementById('wl-note');
+    const input = document.getElementById('wl-input');
+    btn.textContent = 'Записан ✓';
+    btn.style.background = '#16a34a';
+    btn.style.boxShadow = '0 0 24px rgba(22,163,74,0.3)';
     btn.disabled = true;
-    document.getElementById('email-input').disabled = true;
-    note.textContent = 'Готово! Пришлём инвайт как только откроем следующий поток.';
-    note.style.color = '#34d399';
+    input.disabled = true;
+    note.textContent = 'Готово. Пришлём инвайт как только откроем следующий поток.';
+    note.style.color = '#4ade80';
   }
 </script>
 
