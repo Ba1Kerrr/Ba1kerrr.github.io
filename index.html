@@ -24,17 +24,46 @@
     <li><a href="#couples">Режим пары</a></li>
   </ul>
   <div class="nav-right">
-    <a href="https://github.com/Ba1Kerrr" class="btn-sm">Мой профиль</a> <!--  еще без войти и подобного ибо сайт еще не работает) -->
+    <a href="https://github.com/Ba1Kerrr" class="btn-sm">Мой профиль</a>
     <a href="#waitlist" class="btn-sm btn-accent">Ранний доступ</a>
-      <a href="https://t.me/soulmates_ru_onboarding" class="btn-sm">Telegram-канал</a>
+    <a href="https://t.me/soulmates_ru_onboarding" class="btn-sm">Telegram</a>
   </div>
+  <button class="nav-burger" id="navBurger" aria-label="Меню" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<!-- MOBILE NAV -->
+<div class="nav-mobile" id="navMobile" aria-hidden="true">
+  <a href="#features"     onclick="closeNav()">О сервисе</a>
+  <a href="#integrations" onclick="closeNav()">Интеграции</a>
+  <a href="#couples"      onclick="closeNav()">Режим пары</a>
+  <div class="nav-mobile-divider"></div>
+  <div class="nav-mobile-actions">
+    <a href="https://t.me/soulmates_ru_onboarding" onclick="closeNav()">Telegram-канал</a>
+    <a href="#waitlist" class="mob-accent" onclick="closeNav()">Ранний доступ →</a>
+  </div>
+</div>
 
 <!-- HERO -->
 <div style="max-width:1320px;margin:0 auto;padding:0 6vw;">
   <section class="hero" style="padding:0;margin:0;">
     <div class="hero-copy reveal">
-      <div class="hero-eyebrow">Закрытое бета-тестирование будет открыто через 1 месяц</div> <!--  еще не открыто,надо поставить таймер бы на месяц -->
+      <div class="hero-eyebrow">
+        <div class="cd-title">
+          <span class="eyebrow-dot"></span>
+          Открытие через
+        </div>
+        <div class="countdown-row">
+          <div class="cd-unit"><div class="cd-num" id="h-days">30</div><div class="cd-label">дней</div></div>
+          <div class="cd-sep">:</div>
+          <div class="cd-unit"><div class="cd-num" id="h-hours">00</div><div class="cd-label">часов</div></div>
+          <div class="cd-sep">:</div>
+          <div class="cd-unit"><div class="cd-num" id="h-mins">00</div><div class="cd-label">минут</div></div>
+          <div class="cd-sep">:</div>
+          <div class="cd-unit"><div class="cd-num" id="h-secs">00</div><div class="cd-label">секунд</div></div>
+        </div>
+      </div>
 
       <h1>Находи людей,<br>а не <span class="accent">фотографии.</span></h1>
 
@@ -594,70 +623,116 @@
 </footer>
 
 <script>
-  // Scroll reveal
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach((e, i) => {
-      if (e.isIntersecting) {
-        e.target.style.transitionDelay = (e.target.dataset.delay || 0) + 'ms';
-        e.target.classList.add('on');
-      }
+  /* ── Scroll reveal ── */
+  const revealIO = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) e.target.classList.add('on');
     });
   }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => revealIO.observe(el));
 
-  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
-   (function() {
-    const launchDate = new Date();
-    launchDate.setDate(launchDate.getDate() + 30);
+  /* ── Hamburger ── */
+  const nav       = document.querySelector('nav');
+  const burger    = document.getElementById('navBurger');
+  const mobileNav = document.getElementById('navMobile');
 
-    const timerEl = document.getElementById('countdown');
-    const daysEl = document.getElementById('days');
-    const hoursEl = document.getElementById('hours');
-    const minutesEl = document.getElementById('minutes');
-    const secondsEl = document.getElementById('seconds');
+  burger.addEventListener('click', () => {
+    const open = mobileNav.classList.toggle('open');
+    burger.classList.toggle('open', open);
+    burger.setAttribute('aria-expanded', open);
+    mobileNav.setAttribute('aria-hidden', !open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  });
+
+  function closeNav() {
+    mobileNav.classList.remove('open');
+    burger.classList.remove('open');
+    burger.setAttribute('aria-expanded', 'false');
+    mobileNav.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  // Close on outside click
+  document.addEventListener('click', e => {
+    if (!nav.contains(e.target) && !mobileNav.contains(e.target)) closeNav();
+  });
+
+  /* ── Countdown (shared: hero badge + CTA section) ── */
+  (function () {
+    // Fixed launch date: 26 July 2026
+    const LAUNCH = new Date('2026-07-26T12:00:00+03:00');
+    const TOTAL  = LAUNCH - new Date('2026-06-25T00:00:00+03:00');
+
+    const pad = n => String(n).padStart(2, '0');
+
+    // Hero badge IDs
+    const hD = document.getElementById('h-days');
+    const hH = document.getElementById('h-hours');
+    const hM = document.getElementById('h-mins');
+    const hS = document.getElementById('h-secs');
+
+    // CTA section IDs (existing markup kept)
+    const cD = document.getElementById('days');
+    const cH = document.getElementById('hours');
+    const cMi = document.getElementById('minutes');
+    const cS = document.getElementById('seconds');
     const progressBar = document.getElementById('progressBar');
 
-    // Общая длительность в миллисекундах (30 дней)
-    const totalDuration = 30 * 24 * 60 * 60 * 1000;
-    const startDate = new Date();
-
-    function pad(n) {
-      return String(n).padStart(2, '0');
-    }
-
-    function updateTimer() {
-      const now = new Date();
-      const diff = launchDate - now;
-
+    function tick() {
+      const diff = LAUNCH - Date.now();
       if (diff <= 0) {
-        const wrapper = document.querySelector('.timer-wrapper');
-        wrapper.outerHTML = `
-          <div class="timer-open">
-            🎉 Бета-тестирование открыто!
-            <span>Присоединяйтесь к нам прямо сейчас</span>
-          </div>
-        `;
+        [hD,hH,hM,hS].forEach(el => el && (el.textContent = '00'));
         return;
       }
 
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-      const minutes = Math.floor((diff / (1000 * 60)) % 60);
-      const seconds = Math.floor((diff / 1000) % 60);
+      const d  = Math.floor(diff / 864e5);
+      const h  = Math.floor((diff % 864e5) / 36e5);
+      const mi = Math.floor((diff % 36e5) / 6e4);
+      const s  = Math.floor((diff % 6e4) / 1e3);
 
-      daysEl.textContent = pad(days);
-      hoursEl.textContent = pad(hours);
-      minutesEl.textContent = pad(minutes);
-      secondsEl.textContent = pad(seconds);
+      // Hero badge
+      if (hD) { const prev = hD.textContent; hD.textContent = pad(d);  if (prev !== pad(d))  tickAnim(hD);  }
+      if (hH) { const prev = hH.textContent; hH.textContent = pad(h);  if (prev !== pad(h))  tickAnim(hH);  }
+      if (hM) { const prev = hM.textContent; hM.textContent = pad(mi); if (prev !== pad(mi)) tickAnim(hM); }
+      if (hS) { const prev = hS.textContent; hS.textContent = pad(s);  if (prev !== pad(s))  tickAnim(hS);  }
 
-      // Прогресс-бар (сколько прошло)
-      const elapsed = now - startDate;
-      const progress = Math.min((elapsed / totalDuration) * 100, 100);
-      progressBar.style.width = progress + '%';
+      // CTA section
+      if (cD)  cD.textContent  = pad(d);
+      if (cH)  cH.textContent  = pad(h);
+      if (cMi) cMi.textContent = pad(mi);
+      if (cS)  cS.textContent  = pad(s);
+
+      if (progressBar) {
+        const elapsed  = TOTAL - diff;
+        progressBar.style.width = Math.min(elapsed / TOTAL * 100, 100) + '%';
+      }
     }
 
-    updateTimer();
-    setInterval(updateTimer, 1000);
+    function tickAnim(el) {
+      el.classList.remove('tick');
+      requestAnimationFrame(() => el.classList.add('tick'));
+      setTimeout(() => el.classList.remove('tick'), 150);
+    }
+
+    tick();
+    setInterval(tick, 1000);
   })();
+
+  /* ── Waitlist form (if present) ── */
+  const wlForm = document.querySelector('.waitlist-form');
+  if (wlForm) {
+    wlForm.addEventListener('submit', e => {
+      e.preventDefault();
+      const btn   = wlForm.querySelector('button[type=submit]');
+      const input = wlForm.querySelector('input[type=email]');
+      const note  = document.getElementById('wl-note');
+      btn.textContent  = 'Записан ✓';
+      btn.style.cssText = 'background:#16a34a;box-shadow:0 0 24px rgba(22,163,74,.3)';
+      btn.disabled = true;
+      input.disabled   = true;
+      if (note) { note.textContent = 'Готово. Пришлём когда откроемся.'; note.style.color = '#4ade80'; }
+    });
+  }
 </script>
 
 </body>
