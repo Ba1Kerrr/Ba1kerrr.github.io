@@ -1,5 +1,5 @@
 /* ─────────────────────────────────────────
-   SoulMates Landing — style.css
+   SoulMates Landing - style.css
    Mobile-first. Breakpoints: 640 / 1024 / 1280
    ───────────────────────────────────────── */
 
@@ -91,12 +91,12 @@ nav {
 }
 .logo span { color: var(--accent); }
 
-/* Desktop nav links — hidden on mobile */
+/* Desktop nav links - hidden on mobile */
 .nav-center { display: none; gap: 28px; list-style: none; }
 .nav-center a { color: var(--sub); font-size: 0.875rem; text-decoration: none; transition: color 0.15s; }
 .nav-center a:hover { color: var(--text); }
 
-/* Desktop nav-right — hidden on mobile */
+/* Desktop nav-right - hidden on mobile */
 .nav-right { display: none; gap: 8px; align-items: center; }
 
 /* Hamburger */
@@ -353,7 +353,7 @@ nav {
 .action-btn.skip { background: var(--surface2); }
 .action-btn.like { background: rgba(92,68,255,0.15); border-color: rgba(92,68,255,0.3); }
 
-/* Secondary phone — hidden on mobile */
+/* Secondary phone - hidden on mobile */
 .phone-secondary {
   display: none;
   width: 200px; height: 420px; position: absolute;
@@ -485,7 +485,7 @@ nav {
 .int-desc   { font-size: 0.78rem; color: var(--sub); line-height: 1.5; }
 .int-status { font-size: 0.62rem; font-weight: 600; padding: 3px 9px; border-radius: 6px; background: rgba(92,68,255,0.1); color: var(--accent); flex-shrink: 0; }
 
-/* Data cards visual — hidden on mobile */
+/* Data cards visual - hidden on mobile */
 .integrations-visual { display: none; position: relative; height: 360px; }
 .data-card         { position: absolute; background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 16px; box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
 .data-card-steam   { width: 220px; left: 0; top: 0; }
@@ -665,55 +665,11 @@ footer { border-top: 1px solid var(--border); padding: 28px 20px; display: flex;
 .faq-item a:hover { text-decoration: underline; }
 
 /* ─────────────────────────────────────────
-   WAITLIST — referral / virality
+   WAITLIST - referral / virality
    ───────────────────────────────────────── */
-.cta-lead { color: var(--sub); font-size: 0.95rem; line-height: 1.75; margin-bottom: 24px; }
-.waitlist-form { display: flex; flex-direction: column; gap: 10px; margin-bottom: 12px; max-width: 420px; margin-left: auto; margin-right: auto; }
+.cta-lead { color: var(--sub); font-size: 0.95rem; line-height: 1.75; margin-bottom: 28px; }
+.cta-tg-btn { display: inline-flex; align-items: center; gap: 10px; margin-bottom: 14px; }
 
-.wl-success { animation: fadeUp 0.4s ease both; }
-.wl-badge {
-  display: inline-flex; align-items: center; gap: 7px;
-  background: rgba(74,222,128,0.12); color: #4ade80;
-  border: 1px solid rgba(74,222,128,0.3); border-radius: 999px;
-  padding: 7px 16px; font-size: 0.8rem; font-weight: 700; margin-bottom: 16px;
-}
-.wl-badge .ic { width: 16px; height: 16px; }
-.wl-position { font-size: 1.5rem; font-weight: 900; color: var(--text); margin-bottom: 8px; }
-.wl-position span { color: var(--accent); }
-.wl-share-copy { font-size: 0.88rem; color: var(--sub); margin-bottom: 18px; line-height: 1.6; }
-.wl-share { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
-.wl-share-btn {
-  display: inline-flex; align-items: center; gap: 7px;
-  padding: 10px 16px; border-radius: 10px; cursor: pointer;
-  font-size: 0.82rem; font-weight: 600; text-decoration: none;
-  border: 1px solid var(--border2); color: var(--text);
-  background: var(--surface); font-family: inherit;
-  transition: transform 0.15s, background 0.15s, border-color 0.15s;
-}
-.wl-share-btn:hover { transform: translateY(-2px); }
-.wl-share-btn .ic { width: 17px; height: 17px; }
-.wl-share-btn.tg:hover { border-color: #2aabee; color: #2aabee; }
-.wl-share-btn.vk:hover { border-color: #4a76a8; color: #6a9bd8; }
-.wl-share-btn.link:hover { border-color: var(--accent); color: var(--accent); }
-
-/* Social proof */
-.social-proof {
-  display: flex; align-items: center; justify-content: center; gap: 12px;
-  margin-top: 28px; padding-top: 24px; border-top: 1px solid var(--border);
-  flex-wrap: wrap;
-}
-.sp-avatars { display: flex; }
-.sp-avatars span {
-  width: 28px; height: 28px; border-radius: 50%; margin-left: -8px;
-  border: 2px solid var(--bg2);
-  background: linear-gradient(135deg, #2a2550, #1c1a3a);
-}
-.sp-avatars span:first-child { margin-left: 0; }
-.sp-avatars span:nth-child(2) { background: linear-gradient(135deg, #3a2540, #2a1a3a); }
-.sp-avatars span:nth-child(3) { background: linear-gradient(135deg, #25303a, #1a242a); }
-.sp-avatars span:nth-child(4) { background: linear-gradient(135deg, #302a25, #2a1f1a); }
-.sp-text { font-size: 0.82rem; color: var(--sub); }
-.sp-text strong { color: var(--text); font-weight: 700; }
 
 /* ─────────────────────────────────────────
    TABLET  ≥ 640px
@@ -857,4 +813,61 @@ footer { border-top: 1px solid var(--border); padding: 28px 20px; display: flex;
 /* ── Larger tap targets on touch ── */
 @media (hover: none) {
   .btn-sm, .nav-mobile a, .wl-share-btn { min-height: 44px; display: inline-flex; align-items: center; justify-content: center; }
+}
+
+/* -----------------------------------------
+   HERO PHONE: CARD STACK + SWIPE
+   ----------------------------------------- */
+.feed-stack {
+  flex: 1; position: relative; overflow: hidden;
+}
+.feed-stack .feed-card {
+  position: absolute; inset: 0;
+  background: var(--surface2); border-radius: 18px;
+  border: 1px solid var(--border); overflow: hidden;
+  transition: transform 0.42s cubic-bezier(.25,1,.35,1), opacity 0.32s ease;
+  will-change: transform;
+  flex: none;
+}
+.fc-b2    { transform: scale(0.87) translateY(18px); z-index: 1; }
+.fc-b1    { transform: scale(0.93) translateY(10px); z-index: 2; }
+.fc-front { transform: scale(1) translateY(0);       z-index: 3; }
+.fc-exit-r {
+  transform: translateX(145%) rotate(22deg) !important;
+  opacity: 0; z-index: 4;
+  transition: transform 0.38s cubic-bezier(.4,0,.6,1), opacity 0.3s !important;
+}
+.fc-exit-l {
+  transform: translateX(-145%) rotate(-22deg) !important;
+  opacity: 0; z-index: 4;
+  transition: transform 0.38s cubic-bezier(.4,0,.6,1), opacity 0.3s !important;
+}
+
+/* LIKE / МИМО stamps */
+.swipe-stamp {
+  position: absolute; top: 12px; z-index: 10;
+  padding: 2px 8px; font-size: 0.58rem; font-weight: 800;
+  letter-spacing: 1.5px; border-radius: 5px; border: 2px solid;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.14s ease;
+}
+.stamp-like { left: 10px; color: #4ade80; border-color: #4ade80; transform: rotate(-12deg); }
+.stamp-nope { right: 10px; color: var(--pink); border-color: var(--pink); transform: rotate(12deg); }
+
+/* Action button micro-interactions */
+.action-btn {
+  transition: background 0.15s, border-color 0.15s, color 0.15s, transform 0.15s;
+  cursor: pointer;
+}
+.action-btn:active  { transform: scale(0.88); }
+.action-btn.like:hover { background: rgba(74,222,128,0.18); border-color: rgba(74,222,128,0.5); color: #4ade80; }
+.action-btn.skip:hover { background: rgba(255,77,109,0.15); border-color: rgba(255,77,109,0.45); color: var(--pink); }
+
+/* Pulse hint on like button (mobile — no hover) */
+@media (hover: none) {
+  .action-btn.like { animation: pulseHint 3s ease-in-out 2s 2; }
+}
+@keyframes pulseHint {
+  0%,100% { box-shadow: none; }
+  50%      { box-shadow: 0 0 0 5px rgba(74,222,128,0.2); }
 }

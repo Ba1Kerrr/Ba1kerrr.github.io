@@ -4,10 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="theme-color" content="#060610">
-  <title>SoulMates — знакомства по вкусам, а не по фоткам</title>
-  <meta name="description" content="SoulMates считает совместимость по твоему Steam, Spotify и Кинопоиску. Без анкет и свайпов наугад — только люди, с которыми ты реально совпадаешь.">
+  <title>SoulMates - знакомства по вкусам, а не по фоткам</title>
+  <meta name="description" content="SoulMates считает совместимость по твоему Steam, Spotify и Кинопоиску. Без анкет и свайпов наугад - только люди, с которыми ты реально совпадаешь.">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="SoulMates — знакомься по вкусам, а не по фоткам">
+  <meta property="og:title" content="SoulMates - знакомься по вкусам, а не по фоткам">
   <meta property="og:description" content="Совместимость по Steam, Spotify и Кинопоиску. Никаких анкет. Никакой лотереи свайпов.">
   <meta property="og:url" content="https://soulmates.com.ru">
   <meta name="twitter:card" content="summary_large_image">
@@ -53,7 +53,7 @@
   </ul>
   <div class="nav-right">
     <a href="https://t.me/soulmates_ru_onboarding" class="btn-sm">Telegram</a>
-    <a href="#waitlist" class="btn-sm btn-accent">Занять место →</a>
+    <a href="https://t.me/soulmates_ru_onboarding" class="btn-sm btn-accent" target="_blank" rel="noopener">Telegram →</a>
   </div>
   <button class="nav-burger" id="navBurger" aria-label="Меню" aria-expanded="false">
     <span></span><span></span><span></span>
@@ -69,7 +69,7 @@
   <div class="nav-mobile-divider"></div>
   <div class="nav-mobile-actions">
     <a href="https://t.me/soulmates_ru_onboarding" onclick="closeNav()">Telegram-канал</a>
-    <a href="#waitlist" class="mob-accent" onclick="closeNav()">Занять место в очереди →</a>
+    <a href="https://t.me/soulmates_ru_onboarding" class="mob-accent" target="_blank" rel="noopener" onclick="closeNav()">Telegram →</a>
   </div>
 </div>
 
@@ -97,11 +97,11 @@
 
       <p class="hero-desc">
         SoulMates считает совместимость по твоему Steam, Spotify и Кинопоиску.
-        Никаких анкет «расскажи о себе» и свайпов наугад — только люди, с которыми ты правда совпадаешь.
+        Никаких анкет «расскажи о себе» и свайпов наугад - только люди, с которыми ты правда совпадаешь.
       </p>
 
       <div class="hero-actions">
-        <a href="#waitlist" class="btn-primary">Занять место в очереди</a>
+        <a href="https://t.me/soulmates_ru_onboarding" class="btn-primary" target="_blank" rel="noopener">Подписаться на Telegram</a>
         <a href="#how" class="btn-outline">Как это работает</a>
       </div>
 
@@ -137,29 +137,78 @@
             </div>
           </div>
 
-          <div class="feed-card">
-            <div class="feed-card-photo">
-              <div class="silhouette-head"></div>
-              <div class="silhouette-body"></div>
-              <div class="compat-badge">91% совпадение</div>
-            </div>
-            <div class="feed-card-info">
-              <div class="feed-name">Алина, 21</div>
-              <div class="feed-location">Москва · 3.2 км</div>
-              <div class="compat-row">
-                <div class="compat-label">Совместимость</div>
-                <div class="compat-bar-wrap"><div class="compat-bar-fill"></div></div>
-                <div class="compat-pct">91%</div>
+          <!-- Swipeable card stack: back → mid → front -->
+          <div class="feed-stack" id="heroStack">
+            <div class="feed-card fc-b2">
+              <div class="feed-card-photo" style="background:linear-gradient(160deg,#1a2535,#0e1825);">
+                <div class="silhouette-head"></div>
+                <div class="silhouette-body"></div>
+                <div class="compat-badge">79%</div>
+                <div class="swipe-stamp stamp-like">ЛАЙК</div>
+                <div class="swipe-stamp stamp-nope">МИМО</div>
               </div>
-              <div class="interest-chips">
-                <div class="chip">The Witcher 3</div>
-                <div class="chip">Radiohead</div>
-                <div class="chip">Интерстеллар</div>
+              <div class="feed-card-info">
+                <div class="feed-name">Варя, 22</div>
+                <div class="feed-location">Москва · 4.1 км</div>
+                <div class="compat-row">
+                  <div class="compat-label">Совместимость</div>
+                  <div class="compat-bar-wrap"><div class="compat-bar-fill" style="width:79%"></div></div>
+                  <div class="compat-pct">79%</div>
+                </div>
+                <div class="interest-chips">
+                  <div class="chip">Кс2</div>
+                  <div class="chip">Танцы</div>
+                </div>
+              </div>
+            </div>
+            <div class="feed-card fc-b1">
+              <div class="feed-card-photo" style="background:linear-gradient(160deg,#251535,#180e25);">
+                <div class="silhouette-head"></div>
+                <div class="silhouette-body"></div>
+                <div class="compat-badge">87%</div>
+                <div class="swipe-stamp stamp-like">ЛАЙК</div>
+                <div class="swipe-stamp stamp-nope">МИМО</div>
+              </div>
+              <div class="feed-card-info">
+                <div class="feed-name">Адель, 19</div>
+                <div class="feed-location">Москва · 1.8 км</div>
+                <div class="compat-row">
+                  <div class="compat-label">Совместимость</div>
+                  <div class="compat-bar-wrap"><div class="compat-bar-fill" style="width:87%"></div></div>
+                  <div class="compat-pct">87%</div>
+                </div>
+                <div class="interest-chips">
+                  <div class="chip">Hollow Knight</div>
+                  <div class="chip">Tame Impala</div>
+                </div>
+              </div>
+            </div>
+            <div class="feed-card fc-front">
+              <div class="feed-card-photo">
+                <div class="silhouette-head"></div>
+                <div class="silhouette-body"></div>
+                <div class="compat-badge">91%</div>
+                <div class="swipe-stamp stamp-like">ЛАЙК</div>
+                <div class="swipe-stamp stamp-nope">МИМО</div>
+              </div>
+              <div class="feed-card-info">
+                <div class="feed-name">Ева, 21</div>
+                <div class="feed-location">Москва · 3.2 км</div>
+                <div class="compat-row">
+                  <div class="compat-label">Совместимость</div>
+                  <div class="compat-bar-wrap"><div class="compat-bar-fill"></div></div>
+                  <div class="compat-pct">91%</div>
+                </div>
+                <div class="interest-chips">
+                  <div class="chip">The Witcher 3</div>
+                  <div class="chip">Radiohead</div>
+                  <div class="chip">Интерстеллар</div>
+                </div>
               </div>
             </div>
           </div>
 
-          <div class="feed-actions">
+          <div class="feed-actions" id="heroActions">
             <div class="action-btn skip"><svg class="ic"><use href="#i-x"/></svg></div>
             <div class="action-btn like"><svg class="ic"><use href="#i-heart"/></svg></div>
           </div>
@@ -171,8 +220,8 @@
         <div class="couple-screen">
           <div class="couple-header">
             <div class="couple-hearts"><svg class="ic"><use href="#i-heart"/></svg></div>
-            <div class="couple-names">Макс &amp; Алина</div>
-            <div class="couple-since">вместе 47 дней</div>
+            <div class="couple-names">Даня &amp; Саша</div>
+            <div class="couple-since">вместе 300 дней</div>
           </div>
 
           <div class="couple-stats">
@@ -262,7 +311,7 @@
           <path d="M12 3L3 7v5c0 5.25 3.75 10.15 9 11.35C17.25 22.15 21 17.25 21 12V7l-9-4z" stroke="#5c44ff" stroke-width="1.5"/>
         </svg>
       </div>
-      YooKassa
+      Discord
     </div>
   </div>
 </div>
@@ -271,27 +320,27 @@
 <section class="how" id="how">
   <div class="how-header reveal">
     <div class="tag">Как это работает</div>
-    <h2>Три шага — и лента живая</h2>
-    <p>Подключаешь сервисы, которыми и так пользуешься каждый день. Дальше — за тебя считает алгоритм.</p>
+    <h2>Три шага - и лента живая</h2>
+    <p>Подключаешь сервисы, которыми и так пользуешься каждый день. Дальше - за тебя считает алгоритм.</p>
   </div>
 
   <div class="how-steps reveal">
     <div class="how-step">
       <div class="how-num">1</div>
       <h3>Подключи аккаунты</h3>
-      <p>Steam, Spotify, Кинопоиск, VK. Профиль соберётся сам — ничего печатать вручную не нужно.</p>
+      <p>Steam, Spotify, Кинопоиск, VK. Профиль соберётся сам - ничего печатать вручную не нужно.</p>
     </div>
     <div class="how-line"></div>
     <div class="how-step">
       <div class="how-num">2</div>
-      <h3>Получи свой процент</h3>
-      <p>ML сравнивает твои вкусы с другими и показывает совместимость в цифрах — ещё до первого сообщения.</p>
+      <h3>Получи процент совместимости</h3>
+      <p>ML сравнивает твои вкусы с другими и показывает совместимость в цифрах - ещё до первого сообщения.</p>
     </div>
     <div class="how-line"></div>
     <div class="how-step">
       <div class="how-num">3</div>
-      <h3>Совпадай и общайся</h3>
-      <p>Лайкай тех, кто реально твой по вайбу. Совпали — открывается чат с готовыми темами для старта.</p>
+      <h3>Лайкай и общайся</h3>
+      <p>Лайкай тех, кто реально твой по вайбу. Совпали - открывается чат с готовыми темами для старта.</p>
     </div>
   </div>
 </section>
@@ -305,7 +354,7 @@
     </div>
     <p>
       Обычный дейтинг гонится за охватом: больше профилей, больше свайпов, больше пустых матчей.
-      Мы — за точность. Каждое совпадение строится на том, что ты реально слушаешь, играешь и смотришь.
+      Мы - за точность. Каждое совпадение строится на том, что ты реально слушаешь, играешь и смотришь.
     </p>
   </div>
 
@@ -318,12 +367,12 @@
         Алгоритм переводит твои интересы в цифры и считает процент совпадения заранее.
         Видишь, насколько вы сходитесь, ещё до того как открыл переписку.
       </p>
-      <div class="feature-highlight">Процент — не рандом, его считает ML</div>
+      <div class="feature-highlight">Процент - не рандом, его считает ML</div>
     </div>
     <div class="feature">
       <div class="feature-ic"><svg class="ic"><use href="#i-heart"/></svg></div>
       <div class="feature-num">02</div>
-      <h3>Матч — это старт, а не финиш</h3>
+      <h3>Матч - это старт, а не финиш</h3>
       <p>
         У большинства приложений всё заканчивается на «вы совпали». У нас тут только начинается:
         общий календарь, вишлист, задачи, расходы, фотоальбом и карта воспоминаний.
@@ -348,7 +397,7 @@
   <div class="screens-header reveal">
     <div class="tag">Приложение</div>
     <h2>Как это выглядит внутри</h2>
-    <p>Лента, матч, чат — и режим пары, куда хочется возвращаться.</p>
+    <p>Лента, матч, чат - и режим пары, куда хочется возвращаться.</p>
   </div>
 
   <div class="screens-row reveal">
@@ -366,7 +415,7 @@
                 <div style="position:absolute;top:8px;right:8px;background:rgba(92,68,255,0.85);border-radius:6px;padding:2px 7px;font-size:0.55rem;font-weight:700;color:#fff;">91%</div>
               </div>
               <div style="padding:10px 12px;">
-                <div style="font-size:0.75rem;font-weight:700;color:var(--text);margin-bottom:4px;">Алина, 21</div>
+                <div style="font-size:0.75rem;font-weight:700;color:var(--text);margin-bottom:4px;">Саша, 21</div>
                 <div style="display:flex;gap:4px;flex-wrap:wrap;">
                   <div class="chip">Radiohead</div>
                   <div class="chip">Dark Souls</div>
@@ -462,7 +511,7 @@
     <div class="compare-row">
       <div class="compare-feat">Заполнить профиль</div>
       <div class="compare-them"><svg class="ic neg"><use href="#i-x"/></svg> Анкета на 20 минут</div>
-      <div class="compare-us"><svg class="ic pos"><use href="#i-check"/></svg> Подключил — готово</div>
+      <div class="compare-us"><svg class="ic pos"><use href="#i-check"/></svg> Подключил - готово</div>
     </div>
     <div class="compare-row">
       <div class="compare-feat">О чём писать</div>
@@ -490,7 +539,7 @@
         <div class="tag">Интеграции</div>
         <h2>Профиль из того, чем ты живёшь.</h2>
         <p>
-          Подключи сервисы, которыми уже пользуешься, — профиль заполнится сам.
+          Подключи сервисы, которыми уже пользуешься, - профиль заполнится сам.
           Никаких «назови три своих интереса» в пустое поле.
         </p>
 
@@ -594,9 +643,9 @@
   <div class="couples-layout">
     <div class="couples-copy reveal">
       <div class="tag">Режим пары</div>
-      <h2>Матч — это только начало.</h2>
+      <h2>Матч - это только начало.</h2>
       <p>
-        Большинство приложений выключаются на «вы совпали». SoulMates с этого момента включается —
+        Большинство приложений выключаются на «вы совпали». SoulMates с этого момента включается -
         и даёт общий инструментарий для жизни вдвоём.
       </p>
 
@@ -612,7 +661,7 @@
           <div class="couples-feat-icon"><svg class="ic"><use href="#i-camera"/></svg></div>
           <div>
             <h4>Общий фотоальбом</h4>
-            <p>Ваши фото попадают на карту воспоминаний — и их просто удобно держать в одном месте.</p>
+            <p>Ваши фото попадают на карту воспоминаний - и их просто удобно держать в одном месте.</p>
           </div>
         </div>
         <div class="couples-feat">
@@ -636,7 +685,7 @@
       <div class="cg-tile pink-tint tall">
         <div class="cg-icon"><svg class="ic"><use href="#i-calendar"/></svg></div>
         <div class="cg-title">Июль 2026</div>
-        <div class="cg-desc">3 события запланировано. Ближайшее — в пятницу.</div>
+        <div class="cg-desc">3 события запланировано. Ближайшее - в пятницу.</div>
         <div class="cg-mini-chart">
           <div class="cg-bar" style="height:40%;"></div>
           <div class="cg-bar" style="height:70%;"></div>
@@ -660,7 +709,7 @@
       <div class="cg-tile" style="grid-column:span 2;">
         <div class="cg-icon"><svg class="ic"><use href="#i-map"/></svg></div>
         <div class="cg-title">Карта воспоминаний</div>
-        <div class="cg-desc">12 отмеченных мест — парки, кафе, маршруты.</div>
+        <div class="cg-desc">12 отмеченных мест - парки, кафе, маршруты.</div>
       </div>
     </div>
   </div>
@@ -675,15 +724,15 @@
   <div class="faq-list reveal">
     <details class="faq-item">
       <summary>Это бесплатно?<span class="faq-plus"></span></summary>
-      <p>Да. Базовый SoulMates бесплатный: лента, матчи, чат и совместимость. Premium добавляет инкогнито, расширенные фильтры и фишки для пар — но без него всё работает.</p>
+      <p>Да. Базовый SoulMates бесплатный: лента, матчи, чат и совместимость. Premium добавляет инкогнито, расширенные фильтры и фишки для пар - но без него всё работает.</p>
     </details>
     <details class="faq-item">
       <summary>Зачем подключать Steam и Spotify?<span class="faq-plus"></span></summary>
-      <p>Чтобы профиль собрался сам и совместимость считалась по реальным вкусам, а не по тому, что ты написал ради красоты. Данные используются только для подбора — публично видно ровно столько, сколько ты разрешишь.</p>
+      <p>Чтобы профиль собрался сам и совместимость считалась по реальным вкусам, а не по тому, что ты написал ради красоты. Данные используются только для подбора - публично видно ровно столько, сколько ты разрешишь.</p>
     </details>
     <details class="faq-item">
       <summary>А если у меня нет всех этих сервисов?<span class="faq-plus"></span></summary>
-      <p>Достаточно одного. Чем больше подключишь, тем точнее процент — но даже один аккаунт уже лучше пустой анкеты.</p>
+      <p>Достаточно одного. Чем больше подключишь, тем точнее процент - но даже один аккаунт уже лучше пустой анкеты.</p>
     </details>
     <details class="faq-item">
       <summary>Что с приватностью?<span class="faq-plus"></span></summary>
@@ -691,22 +740,21 @@
     </details>
     <details class="faq-item">
       <summary>Когда запуск?<span class="faq-plus"></span></summary>
-      <p>Скоро — таймер наверху и внизу показывает обратный отсчёт. Кто в очереди, тот заходит первым. Все новости — в <a href="https://t.me/soulmates_ru_onboarding">Telegram-канале</a>.</p>
+      <p>Скоро - таймер наверху и внизу показывает обратный отсчёт. Кто в очереди, тот заходит первым. Все новости - в <a href="https://t.me/soulmates_ru_onboarding">Telegram-канале</a>.</p>
     </details>
   </div>
 </section>
 
-<!-- CTA / WAITLIST -->
+<!-- CTA -->
 <section class="cta-section" id="waitlist">
   <div class="cta-inner reveal">
     <div class="tag">Ранний доступ</div>
-    <h2>Залетай в очередь</h2>
+    <h2>Открываемся скоро</h2>
 
-    <!-- ТАЙМЕР -->
     <div class="timer-wrapper">
       <div class="timer-glow"></div>
       <div class="timer-content">
-        <span class="timer-label">Открываемся через</span>
+        <span class="timer-label">До открытия</span>
         <div class="timer" id="countdown">
           <div class="timer-item">
             <span class="timer-value" id="days">00</span>
@@ -735,33 +783,14 @@
     </div>
 
     <p class="cta-lead">
-      Бета пока закрыта — допиливаем продукт каждый день. Оставь почту, чтобы зайти одним из первых,
-      и забери место в очереди.
+      Бета пока закрыта — допиливаем каждый день. Все новости и дата открытия — в Telegram-канале.
     </p>
 
-    <!-- Waitlist form -->
-    <form class="waitlist-form" id="wlForm" novalidate>
-      <input type="email" class="waitlist-input" id="wlEmail" placeholder="твоя@почта.ру" autocomplete="email" required>
-      <button type="submit" class="btn-primary">Занять место</button>
-    </form>
-    <div class="cta-note" id="wlNote">Без спама. Только письмо «мы открылись».</div>
-
-    <!-- Success / referral state -->
-    <div class="wl-success" id="wlSuccess" hidden>
-      <div class="wl-badge"><svg class="ic"><use href="#i-check"/></svg> Ты в очереди</div>
-      <div class="wl-position">Твоё место&nbsp;— <span id="wlPos">#0000</span></div>
-      <p class="wl-share-copy">Зови друзей — за каждого поднимаешься в очереди и заходишь раньше.</p>
-      <div class="wl-share">
-        <a class="wl-share-btn tg" id="shareTg" target="_blank" rel="noopener"><svg class="ic"><use href="#i-tg"/></svg> Telegram</a>
-        <a class="wl-share-btn vk" id="shareVk" target="_blank" rel="noopener"><svg class="ic"><use href="#i-vk"/></svg> VK</a>
-        <button type="button" class="wl-share-btn link" id="shareCopy"><svg class="ic"><use href="#i-link"/></svg> <span id="copyLabel">Копировать ссылку</span></button>
-      </div>
-    </div>
-
-    <div class="social-proof">
-      <div class="sp-avatars"><span></span><span></span><span></span><span></span></div>
-      <span class="sp-text"><strong id="spCount">1 248</strong> уже заняли место в очереди</span>
-    </div>
+    <a href="https://t.me/soulmates_ru_onboarding" class="btn-primary cta-tg-btn" target="_blank" rel="noopener">
+      <svg class="ic" style="width:1.1em;height:1.1em"><use href="#i-tg"/></svg>
+      Подписаться на Telegram
+    </a>
+    <div class="cta-note">Пишем только по делу. Узнаешь первым.</div>
   </div>
 </section>
 
@@ -858,69 +887,78 @@
     setInterval(tick, 1000);
   })();
 
-  /* ── Waitlist + referral virality (client-side) ── */
+
+  /* ── Hero phone: card swipe + 3D tilt ── */
   (function () {
-    const form    = document.getElementById('wlForm');
-    const note    = document.getElementById('wlNote');
-    const success = document.getElementById('wlSuccess');
-    const posEl   = document.getElementById('wlPos');
-    const spCount = document.getElementById('spCount');
-    if (!form) return;
+    const stack   = document.getElementById('heroStack');
+    const actions = document.getElementById('heroActions');
+    if (!stack || !actions) return;
 
-    const KEY = 'sm_waitlist';
-    const SHARE_TEXT = 'Нашёл дейтинг, который считает совместимость по Steam, Spotify и Кинопоиску 👀 Залетай в очередь:';
-    const SHARE_URL  = 'https://soulmates.com.ru';
+    const skipBtn = actions.querySelector('.action-btn.skip');
+    const likeBtn = actions.querySelector('.action-btn.like');
 
-    // Social-proof counter that drifts up a little over time (cosmetic)
-    function liveCount() {
-      const base = 1248;
-      const drift = Math.floor((Date.now() - Date.UTC(2026,5,25)) / 36e5); // +1/hour
-      return base + Math.max(0, drift);
+    // DOM order: [fc-b2, fc-b1, fc-front] → reverse → [front, mid, back]
+    let pos = Array.from(stack.querySelectorAll('.feed-card')).reverse();
+    let busy = false;
+
+    function stamps(card) {
+      return { like: card.querySelector('.stamp-like'), nope: card.querySelector('.stamp-nope') };
     }
-    if (spCount) spCount.textContent = liveCount().toLocaleString('ru-RU');
 
-    function showSuccess(pos) {
-      form.hidden = true;
-      note.hidden = true;
-      success.hidden = false;
-      posEl.textContent = '#' + String(pos).padStart(4, '0');
+    function swipe(dir) {
+      if (busy) return;
+      busy = true;
+      const [front, mid, back] = pos;
+      const s = stamps(front);
+      if (s.like) s.like.style.opacity = '0';
+      if (s.nope) s.nope.style.opacity = '0';
 
-      const url = encodeURIComponent(SHARE_URL);
-      const txt = encodeURIComponent(SHARE_TEXT);
-      document.getElementById('shareTg').href = `https://t.me/share/url?url=${url}&text=${txt}`;
-      document.getElementById('shareVk').href = `https://vk.com/share.php?url=${url}&title=${txt}`;
+      front.classList.replace('fc-front', dir === 'right' ? 'fc-exit-r' : 'fc-exit-l');
+      mid.classList.replace('fc-b1', 'fc-front');
+      back.classList.replace('fc-b2', 'fc-b1');
 
-      document.getElementById('shareCopy').addEventListener('click', async () => {
-        const label = document.getElementById('copyLabel');
-        try {
-          await navigator.clipboard.writeText(SHARE_URL);
-          label.textContent = 'Скопировано ✓';
-        } catch (_) {
-          label.textContent = SHARE_URL;
-        }
-        setTimeout(() => { label.textContent = 'Копировать ссылку'; }, 2000);
+      setTimeout(() => {
+        front.classList.remove('fc-exit-r', 'fc-exit-l');
+        front.classList.add('fc-b2');
+        pos = [mid, back, front];
+        busy = false;
+      }, 420);
+    }
+
+    skipBtn.addEventListener('click', () => swipe('left'));
+    likeBtn.addEventListener('click', () => swipe('right'));
+
+    // Stamp preview on hover (desktop only)
+    if (window.matchMedia('(hover:hover)').matches) {
+      likeBtn.addEventListener('mouseenter', () => { const s = stamps(pos[0]); if (s.like) s.like.style.opacity = '1'; });
+      likeBtn.addEventListener('mouseleave', () => { const s = stamps(pos[0]); if (s.like) s.like.style.opacity = '0'; });
+      skipBtn.addEventListener('mouseenter', () => { const s = stamps(pos[0]); if (s.nope) s.nope.style.opacity = '1'; });
+      skipBtn.addEventListener('mouseleave', () => { const s = stamps(pos[0]); if (s.nope) s.nope.style.opacity = '0'; });
+    }
+
+    // 3D tilt on hover (desktop fine pointer only)
+    const heroVisual = document.querySelector('.hero-visual');
+    const phone = heroVisual && heroVisual.querySelector('.phone');
+    if (phone && window.matchMedia('(hover:hover) and (pointer:fine)').matches) {
+      heroVisual.addEventListener('mouseenter', () => {
+        phone.style.animationPlayState = 'paused';
+      });
+      heroVisual.addEventListener('mousemove', (e) => {
+        const r = heroVisual.getBoundingClientRect();
+        const x = ((e.clientX - r.left) / r.width  - 0.5) * 14;
+        const y = ((e.clientY - r.top)  / r.height - 0.5) * -9;
+        phone.style.transform   = `perspective(900px) rotateY(${x}deg) rotateX(${y}deg)`;
+        phone.style.transition  = 'transform 0.1s ease-out';
+      });
+      heroVisual.addEventListener('mouseleave', () => {
+        phone.style.transform   = '';
+        phone.style.transition  = 'transform 0.55s ease-out';
+        setTimeout(() => {
+          phone.style.animationPlayState = '';
+          phone.style.transition = '';
+        }, 560);
       });
     }
-
-    // Restore prior signup
-    try {
-      const saved = JSON.parse(localStorage.getItem(KEY) || 'null');
-      if (saved && saved.pos) showSuccess(saved.pos);
-    } catch (_) {}
-
-    form.addEventListener('submit', e => {
-      e.preventDefault();
-      const email = document.getElementById('wlEmail').value.trim();
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        note.hidden = false;
-        note.textContent = 'Похоже, в почте опечатка — проверь ещё раз.';
-        note.style.color = 'var(--pink)';
-        return;
-      }
-      const pos = (liveCount() % 900) + 100 + Math.floor(Math.random() * 60); // friendly 3-digit-ish
-      try { localStorage.setItem(KEY, JSON.stringify({ email, pos, ts: Date.now() })); } catch (_) {}
-      showSuccess(pos);
-    });
   })();
 </script>
 
