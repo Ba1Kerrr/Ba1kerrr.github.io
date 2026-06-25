@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SoulMates — найди своего человека</title>
+  <meta name="description" content="Знакомства на основе реальных интересов. Steam, Spotify, Кинопоиск. Не тиндер.">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0a0f;
+      --bg2: #0f0f1a;
+      --surface: #15151f;
+      --border: rgba(255,255,255,0.07);
+      --accent: #7c5cfc;
+      --accent2: #e0516e;
+      --accent3: #3dd6f5;
+      --text: #f0eeff;
+      --muted: #7b7a99;
+      --grad: linear-gradient(135deg, #7c5cfc, #e0516e);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* ── CANVAS BACKGROUND ── */
+    #bg-canvas {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.5;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 6vw;
+      background: rgba(10,10,15,0.8);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo {
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      background: var(--grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    .nav-cta {
+      background: var(--grad);
+      color: #fff;
+      border: none;
+      padding: 9px 22px;
+      border-radius: 50px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+
+    .nav-cta:hover { opacity: 0.85; transform: translateY(-1px); }
+
+    /* ── SECTIONS ── */
+    section { position: relative; z-index: 1; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 120px 6vw 80px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(124,92,252,0.12);
+      border: 1px solid rgba(124,92,252,0.3);
+      border-radius: 50px;
+      padding: 6px 16px;
+      font-size: 0.8rem;
+      color: #a98fff;
+      margin-bottom: 32px;
+      letter-spacing: 0.5px;
+    }
+
+    .hero-badge span { font-size: 0.7rem; opacity: 0.7; }
+
+    .hero h1 {
+      font-size: clamp(2.8rem, 7vw, 6rem);
+      font-weight: 800;
+      line-height: 1.08;
+      letter-spacing: -2px;
+      max-width: 900px;
+      margin-bottom: 28px;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      background: var(--grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      color: var(--muted);
+      max-width: 560px;
+      margin-bottom: 48px;
+      line-height: 1.7;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 80px;
+    }
+
+    .btn-primary {
+      background: var(--grad);
+      color: #fff;
+      border: none;
+      padding: 16px 36px;
+      border-radius: 50px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.2s, opacity 0.2s;
+      box-shadow: 0 0 40px rgba(124,92,252,0.35);
+    }
+
+    .btn-primary:hover { transform: translateY(-2px); opacity: 0.9; }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: 16px 36px;
+      border-radius: 50px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .btn-ghost:hover { border-color: rgba(255,255,255,0.25); background: rgba(255,255,255,0.04); }
+
+    .hero-stats {
+      display: flex;
+      gap: 48px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .stat { text-align: center; }
+    .stat-num {
+      font-size: 2rem;
+      font-weight: 800;
+      background: var(--grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .stat-label { font-size: 0.8rem; color: var(--muted); margin-top: 4px; }
+
+    /* ── DIVIDER ── */
+    .section-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 6vw;
+      margin: 20px 0;
+      gap: 20px;
+    }
+    .section-divider::before, .section-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+    .section-divider span {
+      font-size: 0.75rem;
+      color: var(--muted);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    /* ── PROBLEM ── */
+    .problem {
+      padding: 100px 6vw;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .problem-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4px;
+      border-radius: 24px;
+      overflow: hidden;
+    }
+
+    .problem-card {
+      background: var(--surface);
+      padding: 40px;
+    }
+
+    .problem-card.bad { border-left: 3px solid #e0516e; }
+    .problem-card.good { border-left: 3px solid #7c5cfc; }
+    .problem-card.bad h3::before { content: '✗  '; color: #e0516e; }
+    .problem-card.good h3::before { content: '✓  '; color: #7c5cfc; }
+
+    .problem-card h3 {
+      font-size: 1.15rem;
+      margin-bottom: 16px;
+    }
+
+    .problem-card ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .problem-card ul li {
+      font-size: 0.95rem;
+      color: var(--muted);
+      padding-left: 16px;
+      position: relative;
+    }
+
+    .problem-card ul li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+    }
+
+    /* ── SECTION HEADER ── */
+    .section-header {
+      text-align: center;
+      max-width: 680px;
+      margin: 0 auto 64px;
+    }
+
+    .section-tag {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    .section-header h2 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800;
+      letter-spacing: -1px;
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+
+    .section-header p {
+      color: var(--muted);
+      font-size: 1.05rem;
+      line-height: 1.7;
+    }
+
+    /* ── FEATURES ── */
+    .features {
+      padding: 100px 6vw;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2px;
+      max-width: 1200px;
+      margin: 0 auto;
+      border-radius: 24px;
+      overflow: hidden;
+    }
+
+    .feature-card {
+      background: var(--surface);
+      padding: 40px;
+      transition: background 0.3s;
+    }
+
+    .feature-card:hover { background: #1a1a28; }
+
+    .feature-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 24px;
+    }
+
+    .feature-icon.purple { background: rgba(124,92,252,0.15); }
+    .feature-icon.pink   { background: rgba(224,81,110,0.15); }
+    .feature-icon.cyan   { background: rgba(61,214,245,0.15); }
+    .feature-icon.green  { background: rgba(52,211,153,0.15); }
+    .feature-icon.orange { background: rgba(251,146,60,0.15); }
+    .feature-icon.gold   { background: rgba(234,179,8,0.15); }
+
+    .feature-card h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .feature-card p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    /* ── INTEGRATIONS ── */
+    .integrations {
+      padding: 100px 6vw;
+      background: var(--bg2);
+    }
+
+    .integrations-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .integrations-list {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 0;
+    }
+
+    .integration-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 36px 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+
+    .integration-card:hover {
+      border-color: rgba(124,92,252,0.4);
+      transform: translateY(-4px);
+    }
+
+    .integration-logo {
+      font-size: 2.2rem;
+      line-height: 1;
+    }
+
+    .integration-card h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+
+    .integration-card p {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.6;
+      flex: 1;
+    }
+
+    .integration-tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 50px;
+      background: rgba(124,92,252,0.12);
+      color: #a98fff;
+      width: fit-content;
+    }
+
+    /* ── HOW IT WORKS ── */
+    .how {
+      padding: 100px 6vw;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      max-width: 700px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .steps::before {
+      content: '';
+      position: absolute;
+      left: 27px;
+      top: 28px;
+      bottom: 28px;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--accent), var(--accent2));
+      opacity: 0.3;
+    }
+
+    .step {
+      display: flex;
+      gap: 28px;
+      align-items: flex-start;
+      padding: 28px 0;
+    }
+
+    .step-num {
+      width: 56px;
+      height: 56px;
+      min-width: 56px;
+      border-radius: 50%;
+      background: var(--surface);
+      border: 2px solid rgba(124,92,252,0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--accent);
+      position: relative;
+      z-index: 1;
+    }
+
+    .step-content h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      padding-top: 14px;
+    }
+
+    .step-content p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    /* ── CTA ── */
+    .cta-section {
+      padding: 120px 6vw;
+      text-align: center;
+      background: var(--bg2);
+    }
+
+    .cta-inner {
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .cta-section h2 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 800;
+      letter-spacing: -1.5px;
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+
+    .cta-section p {
+      color: var(--muted);
+      font-size: 1.05rem;
+      margin-bottom: 40px;
+      line-height: 1.7;
+    }
+
+    .waitlist-form {
+      display: flex;
+      gap: 12px;
+      max-width: 460px;
+      margin: 0 auto;
+    }
+
+    .waitlist-form input {
+      flex: 1;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 50px;
+      padding: 14px 22px;
+      font-size: 0.95rem;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .waitlist-form input:focus { border-color: rgba(124,92,252,0.5); }
+    .waitlist-form input::placeholder { color: var(--muted); }
+
+    .waitlist-form button {
+      background: var(--grad);
+      color: #fff;
+      border: none;
+      padding: 14px 28px;
+      border-radius: 50px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+
+    .waitlist-form button:hover { opacity: 0.9; transform: translateY(-1px); }
+
+    .waitlist-note {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 14px;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 40px 6vw;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .footer-logo {
+      font-weight: 700;
+      background: var(--grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+    }
+
+    .footer-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--text); }
+
+    .footer-copy {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    /* ── GLOW BLOBS ── */
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(120px);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .blob-purple {
+      width: 600px; height: 600px;
+      background: rgba(124,92,252,0.12);
+    }
+    .blob-pink {
+      width: 400px; height: 400px;
+      background: rgba(224,81,110,0.1);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .problem-grid { grid-template-columns: 1fr; }
+      .integrations-list { grid-template-columns: 1fr; }
+      .waitlist-form { flex-direction: column; }
+      .waitlist-form input { border-radius: 14px; }
+      .waitlist-form button { border-radius: 14px; }
+      .hero-stats { gap: 28px; }
+      footer { flex-direction: column; text-align: center; }
+    }
+
+    /* ── ANIMATE ON SCROLL ── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="bg-canvas"></canvas>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">SoulMates</div>
+  <ul class="nav-links">
+    <li><a href="#features">Возможности</a></li>
+    <li><a href="#integrations">Интеграции</a></li>
+    <li><a href="#how">Как это работает</a></li>
+  </ul>
+  <a href="#waitlist" class="nav-cta">Ранний доступ</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="blob blob-purple" style="top:-200px;left:-200px;"></div>
+  <div class="blob blob-pink" style="top:100px;right:-100px;"></div>
+
+  <div class="hero-badge">
+    <svg width="8" height="8" viewBox="0 0 8 8"><circle cx="4" cy="4" r="4" fill="#7c5cfc"/></svg>
+    Закрытое бета-тестирование открыто
+    <span>· soulmates.com.ru</span>
+  </div>
+
+  <h1>Не листай людей.<br><em>Находи своих.</em></h1>
+
+  <p class="hero-sub">
+    Совместимость на основе того, что ты реально слушаешь, смотришь и во что играешь.
+    Без анкет. Без фильтров "рост от 180". Без алгоритмов тиндера.
+  </p>
+
+  <div class="hero-actions">
+    <a href="#waitlist" class="btn-primary">Попасть в бету →</a>
+    <a href="#how" class="btn-ghost">Как это работает</a>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-num">3</div>
+      <div class="stat-label">интеграции с жизнью</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">ML</div>
+      <div class="stat-label">алгоритм совместимости</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">0</div>
+      <div class="stat-label">случайных свайпов</div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"><span>Почему не тиндер</span></div>
+
+<!-- PROBLEM -->
+<div class="problem fade-up">
+  <div class="problem-grid">
+    <div class="problem-card bad">
+      <h3>Обычный дейтинг</h3>
+      <ul>
+        <li>Фото + пара строк биографии</li>
+        <li>Алгоритм решает за тебя кто "подходит"</li>
+        <li>100 матчей — 0 разговоров</li>
+        <li>Ты не знаешь человека до встречи</li>
+        <li>Общие интересы ищешь сам в чате</li>
+      </ul>
+    </div>
+    <div class="problem-card good">
+      <h3>SoulMates</h3>
+      <ul>
+        <li>Профиль строится из реальных данных</li>
+        <li>ML считает совместимость по интересам</li>
+        <li>Меньше матчей, но каждый — осознанный</li>
+        <li>Общий плейлист и игры ещё до встречи</li>
+        <li>Режим пары: после матча жизнь не заканчивается</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<section class="features" id="features">
+  <div class="section-header fade-up">
+    <div class="section-tag">Возможности</div>
+    <h2>Всё что нужно, ничего лишнего</h2>
+    <p>Фичи, которые появились потому что они нужны, а не чтобы добавить пункт в маркетинговый список.</p>
+  </div>
+
+  <div class="features-grid">
+    <div class="feature-card fade-up">
+      <div class="feature-icon purple">🧠</div>
+      <h3>ML совместимость</h3>
+      <p>Алгоритм анализирует твои реальные интересы — музыку, игры, фильмы — и считает процент совместимости до того, как вы напишете первое сообщение.</p>
+    </div>
+    <div class="feature-card fade-up">
+      <div class="feature-icon pink">💬</div>
+      <h3>Живой чат</h3>
+      <p>WebSocket-чат в реальном времени. Без задержек, без обновления страницы. Просто разговор.</p>
+    </div>
+    <div class="feature-card fade-up">
+      <div class="feature-icon cyan">📹</div>
+      <h3>Видеозвонки</h3>
+      <p>WebRTC прямо в браузере. Встреча перед встречей — без лишних приложений.</p>
+    </div>
+    <div class="feature-card fade-up">
+      <div class="feature-icon green">💑</div>
+      <h3>Режим пары</h3>
+      <p>Матч — это начало. Общий вишлист, календарь, задачи для пары, совместные расходы. Помогает не потерять друг друга в буднях.</p>
+    </div>
+    <div class="feature-card fade-up">
+      <div class="feature-icon orange">🛡️</div>
+      <h3>Антидокс по умолчанию</h3>
+      <p>Точный возраст, геолокация и ссылки в профиле скрыты. EXIF из фото вычищается автоматически. Кнопка экстренного скрытия профиля.</p>
+    </div>
+    <div class="feature-card fade-up">
+      <div class="feature-icon gold">✨</div>
+      <h3>Бусты и Premium</h3>
+      <p>Хочешь больше видимости? Буст на несколько часов, без платной подписки навсегда. Платишь за результат, не за доступ.</p>
+    </div>
+  </div>
+</section>
+
+<!-- INTEGRATIONS -->
+<section class="integrations" id="integrations">
+  <div class="integrations-inner">
+    <div class="section-header fade-up">
+      <div class="section-tag">Интеграции</div>
+      <h2>Твоя жизнь — твой профиль</h2>
+      <p>Не заполняй анкету. Подключи сервисы которыми уже пользуешься — профиль заполнится сам.</p>
+    </div>
+
+    <div class="integrations-list">
+      <div class="integration-card fade-up">
+        <div class="integration-logo">🎮</div>
+        <h3>Steam</h3>
+        <p>Библиотека игр, часы в каждой, любимые жанры. Сразу видно с кем у тебя одни 2000 часов в одной игре.</p>
+        <div class="integration-tag">Подключено</div>
+      </div>
+      <div class="integration-card fade-up">
+        <div class="integration-logo">🎵</div>
+        <h3>Spotify</h3>
+        <p>Топ-треки, любимые артисты, жанры за последние месяцы. Музыкальный вкус — один из сильнейших индикаторов совместимости.</p>
+        <div class="integration-tag">Подключено</div>
+      </div>
+      <div class="integration-card fade-up">
+        <div class="integration-logo">🎬</div>
+        <h3>Кинопоиск</h3>
+        <p>Оценки фильмов, любимые жанры, уже просмотренное. Узнаешь до свидания есть ли кого позвать на тот фильм что давно ждёшь.</p>
+        <div class="integration-tag">Подключено</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="how fade-up">
+    <div class="section-header">
+      <div class="section-tag">Как это работает</div>
+      <h2>Три шага до настоящего матча</h2>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h3>Регистрируешься и подключаешь сервисы</h3>
+          <p>Steam, Spotify, Кинопоиск — подключи один или все три. Чем больше данных, тем точнее алгоритм.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h3>Алгоритм считает совместимость</h3>
+          <p>ML-модель анализирует векторы интересов. Ты видишь процент совместимости с каждым профилем — ещё до свайпа.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h3>Матч — и начинается настоящее</h3>
+          <p>Чат, видео, общий плейлист и игры которые вы оба прошли. А после встречи — режим пары, который помогает оставаться вместе.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="waitlist">
+  <div class="cta-inner fade-up">
+    <div class="blob blob-purple" style="bottom:-200px;right:-200px;"></div>
+    <h2>Готов найти<br><em style="background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-style:normal;">своего человека?</em></h2>
+    <p>Закрытая бета уже идёт. Оставь email — пришлём инвайт как только откроем следующий поток.</p>
+
+    <form class="waitlist-form" onsubmit="handleSubmit(event)">
+      <input type="email" placeholder="твой@email.ru" required id="email-input">
+      <button type="submit">Хочу →</button>
+    </form>
+    <p class="waitlist-note" id="form-note">Без спама. Только инвайт когда придёт очередь.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">SoulMates</div>
+  <ul class="footer-links">
+    <li><a href="#">Политика конфиденциальности</a></li>
+    <li><a href="#">Условия использования</a></li>
+    <li><a href="mailto:hello@soulmates.com.ru">Связаться</a></li>
+  </ul>
+  <div class="footer-copy">© 2026 SoulMates</div>
+</footer>
+
+<script>
+  // Starfield
+  const canvas = document.getElementById('bg-canvas');
+  const ctx = canvas.getContext('2d');
+  let stars = [];
+  let W, H;
+
+  function resize() {
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+
+  function initStars() {
+    stars = Array.from({length: 120}, () => ({
+      x: Math.random() * W,
+      y: Math.random() * H,
+      r: Math.random() * 1.2 + 0.2,
+      a: Math.random(),
+      speed: Math.random() * 0.3 + 0.05,
+      drift: (Math.random() - 0.5) * 0.15
+    }));
+  }
+
+  function drawStars() {
+    ctx.clearRect(0, 0, W, H);
+    stars.forEach(s => {
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(180,160,255,${s.a})`;
+      ctx.fill();
+      s.y -= s.speed;
+      s.x += s.drift;
+      s.a = 0.3 + 0.7 * Math.abs(Math.sin(Date.now() * 0.0005 + s.x));
+      if (s.y < -5) { s.y = H + 5; s.x = Math.random() * W; }
+    });
+    requestAnimationFrame(drawStars);
+  }
+
+  resize();
+  initStars();
+  drawStars();
+  window.addEventListener('resize', () => { resize(); initStars(); });
+
+  // Scroll animations
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        // stagger children
+        e.target.querySelectorAll('.fade-up').forEach((el, i) => {
+          el.style.transitionDelay = `${i * 80}ms`;
+          el.classList.add('visible');
+        });
+      }
+    });
+  }, {threshold: 0.1});
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  // Waitlist form
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('button');
+    const note = document.getElementById('form-note');
+    btn.textContent = '✓ Записал';
+    btn.style.background = 'linear-gradient(135deg,#34d399,#059669)';
+    btn.disabled = true;
+    document.getElementById('email-input').disabled = true;
+    note.textContent = 'Готово! Пришлём инвайт как только откроем следующий поток.';
+    note.style.color = '#34d399';
+  }
+</script>
+
+</body>
+</html>
