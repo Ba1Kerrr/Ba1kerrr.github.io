@@ -14,7 +14,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link href="style.css" rel="stylesheet">
+  <link href="style.css?v=3" rel="stylesheet">
 </head>
 <body>
 
@@ -39,17 +39,20 @@
     <symbol id="i-tg" viewBox="0 0 24 24"><path d="M21 5L3.5 11.8c-.9.3-.9 1.5 0 1.8l4.3 1.4 1.7 5c.2.7 1.1.8 1.6.3l2.4-2.2 4.3 3.2c.6.4 1.4.1 1.6-.6L22 6.1c.2-.8-.5-1.4-1-1.1z" stroke-width="1.4" stroke-linejoin="round"/></symbol>
     <symbol id="i-vk" viewBox="0 0 24 24"><path d="M3 8c.4 4.3 3 8.4 7.6 8.4h.5v-2.5c1.6.2 2.5 1.4 3.2 2.5h2.4c-.5-1.5-1.6-2.8-2.9-3.4 1.2-.7 2.2-1.9 2.6-3.6h-2.2c-.5 1.4-1.5 2.5-3.1 2.7V8h-2.3v4.2C7.7 11.8 6.5 9.9 6.2 8H3z" stroke-width="1.3" stroke-linejoin="round"/></symbol>
     <symbol id="i-link" viewBox="0 0 24 24"><path d="M9 15l6-6M10.5 6.5l1-1a4 4 0 0 1 5.7 5.7l-1.7 1.7M13.5 17.5l-1 1a4 4 0 0 1-5.7-5.7l1.7-1.7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-gift" viewBox="0 0 24 24"><rect x="3.5" y="10" width="17" height="10" rx="1.5" stroke-width="1.6"/><path d="M3.5 10h17M12 10v10" stroke-width="1.6"/><path d="M12 10c-2-4-6-4-6-1s3 1 6 1zM12 10c2-4 6-4 6-1s-3 1-6 1z" stroke-width="1.6" stroke-linejoin="round"/></symbol>
+    <symbol id="i-question" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke-width="1.6"/><path d="M9.5 9.2a2.5 2.5 0 1 1 3.5 2.3c-.8.4-1 .9-1 1.8" stroke-width="1.6" stroke-linecap="round"/><circle cx="12" cy="16.5" r="0.9" fill="currentColor" stroke="none"/></symbol>
   </defs>
 </svg>
 
 <!-- NAV -->
 <nav>
-  <a href="/" class="logo">Soul<span>Mates</span></a>
+  <a href="index.html" class="logo">Soul<span>Mates</span></a>
   <ul class="nav-center">
-    <li><a href="#how">Как работает</a></li>
-    <li><a href="#integrations">Интеграции</a></li>
-    <li><a href="#couples">Для пар</a></li>
-    <li><a href="#faq">Вопросы</a></li>
+    <li><a href="index.html" class="active">Главная</a></li>
+    <li><a href="screenshots.html">Скриншоты</a></li>
+    <li><a href="features.html">Возможности</a></li>
+    <li><a href="couples.html">Для пар</a></li>
+    <li><a href="faq.html">Вопросы</a></li>
   </ul>
   <div class="nav-right">
     <a href="https://t.me/soulmates_ru_onboarding" class="btn-sm">Telegram</a>
@@ -62,10 +65,11 @@
 
 <!-- MOBILE NAV -->
 <div class="nav-mobile" id="navMobile" aria-hidden="true">
-  <a href="#how"          onclick="closeNav()">Как работает</a>
-  <a href="#integrations" onclick="closeNav()">Интеграции</a>
-  <a href="#couples"      onclick="closeNav()">Для пар</a>
-  <a href="#faq"          onclick="closeNav()">Вопросы</a>
+  <a href="index.html" class="active" onclick="closeNav()">Главная</a>
+  <a href="screenshots.html" onclick="closeNav()">Скриншоты</a>
+  <a href="features.html" onclick="closeNav()">Возможности</a>
+  <a href="couples.html" onclick="closeNav()">Для пар</a>
+  <a href="faq.html" onclick="closeNav()">Вопросы</a>
   <div class="nav-mobile-divider"></div>
   <div class="nav-mobile-actions">
     <a href="https://t.me/soulmates_ru_onboarding" onclick="closeNav()">Telegram-канал</a>
@@ -346,403 +350,33 @@
   </div>
 </section>
 
-<!-- FEATURES -->
-<section class="features" id="features">
-  <div class="features-header reveal">
-    <div>
-      <div class="tag">Почему здесь по-другому</div>
-      <h2>Меньше рандома.<br>Больше своих людей.</h2>
-    </div>
-    <p>
-      Обычный дейтинг гонится за охватом: больше профилей, больше свайпов, больше пустых матчей.
-      Мы - за точность. Каждое совпадение строится на том, что ты реально слушаешь, играешь и смотришь.
-    </p>
-  </div>
-
-  <div class="features-grid reveal">
-    <div class="feature">
-      <div class="feature-ic"><svg class="ic"><use href="#i-spark"/></svg></div>
-      <div class="feature-num">01</div>
-      <h3>Совместимость до первого слова</h3>
-      <p>
-        Алгоритм переводит твои интересы в цифры и считает процент совпадения заранее.
-        Видишь, насколько вы сходитесь, ещё до того как открыл переписку.
-      </p>
-      <div class="feature-highlight">Процент - не рандом, его считает ML</div>
-    </div>
-    <div class="feature">
-      <div class="feature-ic"><svg class="ic"><use href="#i-heart"/></svg></div>
-      <div class="feature-num">02</div>
-      <h3>Матч - это старт, а не финиш</h3>
-      <p>
-        У большинства приложений всё заканчивается на «вы совпали». У нас тут только начинается:
-        общий календарь, вишлист, задачи, расходы, фотоальбом и карта воспоминаний.
-      </p>
-      <div class="feature-highlight">11 инструментов для пары</div>
-    </div>
-    <div class="feature">
-      <div class="feature-ic"><svg class="ic"><use href="#i-shield"/></svg></div>
-      <div class="feature-num">03</div>
-      <h3>Приватность по умолчанию</h3>
-      <p>
-        Точный возраст и геолокация скрыты. Ты сам решаешь, что показать.
-        В режиме инкогнито профиль видят только те, кого ты лайкнул.
-      </p>
-      <div class="feature-highlight">Архитектура против деанона</div>
-    </div>
-  </div>
-</section>
-
-<!-- SCREENS -->
-<section class="screens" id="screens">
-  <div class="screens-header reveal">
-    <div class="tag">Приложение</div>
-    <h2>Как это выглядит внутри</h2>
-    <p>Лента, матч, чат - и режим пары, куда хочется возвращаться.</p>
-  </div>
-
-  <div class="screens-row reveal">
-    <!-- Feed screen -->
-    <div class="screen-item">
-      <div class="match-phone match-phone-sm" style="background:var(--surface);">
-        <div style="height:100%;display:flex;flex-direction:column;">
-          <div style="padding:20px 14px 10px;border-bottom:1px solid var(--border);">
-            <div style="font-size:0.7rem;font-weight:700;color:var(--text);">Лента</div>
-          </div>
-          <div style="flex:1;padding:12px;display:flex;flex-direction:column;gap:8px;">
-            <div style="flex:1;background:var(--surface2);border-radius:14px;position:relative;overflow:hidden;">
-              <div style="height:60%;background:linear-gradient(160deg,#1a1535,#0e0e25);display:flex;align-items:center;justify-content:center;position:relative;">
-                <div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#2a2550,#1c1a3a);"></div>
-                <div style="position:absolute;top:8px;right:8px;background:rgba(92,68,255,0.85);border-radius:6px;padding:2px 7px;font-size:0.55rem;font-weight:700;color:#fff;">91%</div>
-              </div>
-              <div style="padding:10px 12px;">
-                <div style="font-size:0.75rem;font-weight:700;color:var(--text);margin-bottom:4px;">Вера, 21</div>
-                <div style="display:flex;gap:4px;flex-wrap:wrap;">
-                  <div class="chip">Radiohead</div>
-                  <div class="chip">Dark Souls</div>
-                </div>
-              </div>
-            </div>
-            <div style="display:flex;gap:6px;">
-              <div style="flex:1;height:38px;border-radius:10px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--sub);"><svg class="ic"><use href="#i-x"/></svg></div>
-              <div style="flex:1;height:38px;border-radius:10px;background:rgba(92,68,255,0.15);border:1px solid rgba(92,68,255,0.3);display:flex;align-items:center;justify-content:center;color:var(--accent);"><svg class="ic"><use href="#i-heart"/></svg></div>
-            </div>
-          </div>
-        </div>
+<!-- LINK-OUT CARDS -->
+<section class="link-cards-section">
+  <div class="link-cards reveal">
+    <a href="screenshots.html" class="link-card">
+      <div class="link-card-icon"><svg class="ic"><use href="#i-spark"/></svg></div>
+      <div class="link-card-body">
+        <h3>Как это выглядит внутри</h3>
+        <p>Лента, матч, чат и режим пары - реальные экраны приложения.</p>
       </div>
-      <div class="screen-label">Лента с совместимостью</div>
-    </div>
-
-    <!-- Match screen (center) -->
-    <div class="screen-item">
-      <div class="match-phone" style="transform:translateY(-30px);">
-        <div class="match-screen">
-          <div class="match-avatars" style="position:relative;">
-            <div class="match-avatar"></div>
-            <div class="match-avatar"></div>
-          </div>
-          <div class="match-title">Это взаимно!</div>
-          <div class="match-sub">Вы оба лайкнули друг друга.<br>Самое время написать первым.</div>
-          <div class="match-interests">
-            <div class="match-interests-title">Общие интересы</div>
-            <div class="match-interests-chips">
-              <div class="chip">Radiohead</div>
-              <div class="chip">The Witcher 3</div>
-              <div class="chip">Интерстеллар</div>
-              <div class="chip">Инди-рок</div>
-            </div>
-          </div>
-          <div class="match-actions">
-            <div class="match-btn match-btn-primary">Написать сообщение</div>
-            <div class="match-btn match-btn-ghost">Открыть профиль</div>
-          </div>
-        </div>
+      <div class="link-card-arrow"><svg class="ic"><use href="#i-arrow"/></svg></div>
+    </a>
+    <a href="features.html" class="link-card">
+      <div class="link-card-icon"><svg class="ic"><use href="#i-shield"/></svg></div>
+      <div class="link-card-body">
+        <h3>Чем мы отличаемся</h3>
+        <p>ML-совместимость, Trust Score, честное намерение и приватность по умолчанию.</p>
       </div>
-      <div class="screen-label">Матч с общими интересами</div>
-    </div>
-
-    <!-- Chat screen -->
-    <div class="screen-item">
-      <div class="match-phone match-phone-sm" style="background:var(--surface);">
-        <div class="chat-screen">
-          <div class="chat-header">
-            <div class="chat-ava">
-              <div class="online-dot"></div>
-            </div>
-            <div>
-              <div class="chat-name">Вера</div>
-              <div class="chat-status">онлайн</div>
-            </div>
-            <div class="compat-mini">91%</div>
-          </div>
-          <div class="chat-messages">
-            <div class="msg msg-in">О, ты тоже в The Witcher залипал?</div>
-            <div class="msg msg-out">Трижды прошёл) А ты какую концовку взяла?</div>
-            <div class="msg msg-in">Цири-ведьмачка, единственно верная)</div>
-            <div class="msg msg-out">Согласен,лучшая,а ты же еще и Интерстеллар смотрела?</div>
-          </div>
-          <div class="chat-input-row">
-            <div class="chat-input-box"></div>
-            <div class="chat-send"></div>
-          </div>
-        </div>
+      <div class="link-card-arrow"><svg class="ic"><use href="#i-arrow"/></svg></div>
+    </a>
+    <a href="couples.html" class="link-card">
+      <div class="link-card-icon"><svg class="ic"><use href="#i-heart"/></svg></div>
+      <div class="link-card-body">
+        <h3>Матч - это только начало</h3>
+        <p>11 инструментов для пары: от общего календаря до совместных расходов.</p>
       </div>
-      <div class="screen-label">Чат в реальном времени</div>
-    </div>
-  </div>
-</section>
-
-<!-- COMPARISON -->
-<section class="compare reveal" id="compare">
-  <div class="compare-header">
-    <div class="tag">Без иллюзий</div>
-    <h2>SoulMates против обычного дейтинга</h2>
-  </div>
-  <div class="compare-table">
-    <div class="compare-row compare-head">
-      <div class="compare-feat">&nbsp;</div>
-      <div class="compare-them">Обычный свайп</div>
-      <div class="compare-us">SoulMates</div>
-    </div>
-    <div class="compare-row">
-      <div class="compare-feat">На чём матч</div>
-      <div class="compare-them"><svg class="ic neg"><use href="#i-x"/></svg> На одной фотке</div>
-      <div class="compare-us"><svg class="ic pos"><use href="#i-check"/></svg> На реальных вкусах</div>
-    </div>
-    <div class="compare-row">
-      <div class="compare-feat">Заполнить профиль</div>
-      <div class="compare-them"><svg class="ic neg"><use href="#i-x"/></svg> Анкета на 20 минут</div>
-      <div class="compare-us"><svg class="ic pos"><use href="#i-check"/></svg> Подключил - готово</div>
-    </div>
-    <div class="compare-row">
-      <div class="compare-feat">О чём писать</div>
-      <div class="compare-them"><svg class="ic neg"><use href="#i-x"/></svg> «Привет, как дела»</div>
-      <div class="compare-us"><svg class="ic pos"><use href="#i-check"/></svg> Темы из общих интересов</div>
-    </div>
-    <div class="compare-row">
-      <div class="compare-feat">После матча</div>
-      <div class="compare-them"><svg class="ic neg"><use href="#i-x"/></svg> Дальше сами как-нибудь</div>
-      <div class="compare-us"><svg class="ic pos"><use href="#i-check"/></svg> Режим пары: 11 инструментов</div>
-    </div>
-    <div class="compare-row">
-      <div class="compare-feat">Приватность</div>
-      <div class="compare-them"><svg class="ic neg"><use href="#i-x"/></svg> Точное гео и возраст</div>
-      <div class="compare-us"><svg class="ic pos"><use href="#i-check"/></svg> Скрыто, инкогнито, без деанона</div>
-    </div>
-  </div>
-</section>
-
-<!-- INTEGRATIONS -->
-<section class="integrations" id="integrations">
-  <div class="integrations-inner">
-    <div class="integrations-layout">
-      <div class="integrations-copy reveal">
-        <div class="tag">Интеграции</div>
-        <h2>Профиль из того, чем ты живёшь.</h2>
-        <p>
-          Подключи сервисы, которыми уже пользуешься, - профиль заполнится сам.
-          Никаких «назови три своих интереса» в пустое поле.
-        </p>
-
-        <div class="integration-cards">
-          <div class="int-card">
-            <div class="int-icon"><svg class="ic"><use href="#i-music"/></svg></div>
-            <div class="int-info">
-              <div class="int-name">Spotify</div>
-              <div class="int-desc">Топ-треки, любимые артисты и жанры за последние месяцы</div>
-            </div>
-            <div class="int-status">Подключено</div>
-          </div>
-          <div class="int-card">
-            <div class="int-icon"><svg class="ic"><use href="#i-game"/></svg></div>
-            <div class="int-info">
-              <div class="int-name">Steam</div>
-              <div class="int-desc">Библиотека игр, наигранные часы и любимые жанры</div>
-            </div>
-            <div class="int-status">Подключено</div>
-          </div>
-          <div class="int-card">
-            <div class="int-icon"><svg class="ic"><use href="#i-film"/></svg></div>
-            <div class="int-info">
-              <div class="int-name">Кинопоиск</div>
-              <div class="int-desc">Оценки фильмов и сериалов собираются в твой вкусовой профиль</div>
-            </div>
-            <div class="int-status">Подключено</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="integrations-visual reveal" style="transition-delay:0.15s">
-        <!-- Steam card -->
-        <div class="data-card data-card-steam">
-          <div class="dc-header">
-            <div class="dc-icon"><svg class="ic"><use href="#i-game"/></svg></div>
-            <div>
-              <div class="dc-title">Steam</div>
-              <div class="dc-sub">23 игры · синхронизировано</div>
-            </div>
-          </div>
-          <div class="dc-items">
-            <div class="dc-item"><span class="dc-item-name">The Witcher 3</span><span class="dc-item-val">208 ч</span></div>
-            <div class="dc-item"><span class="dc-item-name">Dark Souls III</span><span class="dc-item-val">144 ч</span></div>
-            <div class="dc-item"><span class="dc-item-name">Hollow Knight</span><span class="dc-item-val">67 ч</span></div>
-          </div>
-        </div>
-
-        <!-- Spotify card -->
-        <div class="data-card data-card-spotify">
-          <div class="dc-header">
-            <div class="dc-icon"><svg class="ic"><use href="#i-music"/></svg></div>
-            <div>
-              <div class="dc-title">Spotify</div>
-              <div class="dc-sub">Топ за 6 месяцев</div>
-            </div>
-          </div>
-          <div class="dc-bar-row">
-            <div class="dc-bar-item">
-              <div class="dc-bar-label">Инди-рок</div>
-              <div class="dc-bar-track"><div class="dc-bar-fill" style="width:88%"></div></div>
-            </div>
-            <div class="dc-bar-item">
-              <div class="dc-bar-label">Электроника</div>
-              <div class="dc-bar-track"><div class="dc-bar-fill" style="width:64%"></div></div>
-            </div>
-            <div class="dc-bar-item">
-              <div class="dc-bar-label">Постпанк</div>
-              <div class="dc-bar-track"><div class="dc-bar-fill" style="width:52%"></div></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- KP card -->
-        <div class="data-card data-card-kp">
-          <div class="dc-header">
-            <div class="dc-icon"><svg class="ic"><use href="#i-film"/></svg></div>
-            <div>
-              <div class="dc-title">Кинопоиск</div>
-              <div class="dc-sub">142 оценки</div>
-            </div>
-          </div>
-          <div class="dc-bar-row">
-            <div class="dc-bar-item">
-              <div class="dc-bar-label">Sci-Fi</div>
-              <div class="dc-bar-track"><div class="dc-bar-fill kp" style="width:80%"></div></div>
-            </div>
-            <div class="dc-bar-item">
-              <div class="dc-bar-label">Триллер</div>
-              <div class="dc-bar-track"><div class="dc-bar-fill kp" style="width:66%"></div></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- COUPLES MODE -->
-<section class="couples" id="couples">
-  <div class="couples-layout">
-    <div class="couples-copy reveal">
-      <div class="tag">Режим пары</div>
-      <h2>Матч - это только начало.</h2>
-      <p>
-        Большинство приложений выключаются на «вы совпали». SoulMates с этого момента включается -
-        и даёт общий инструментарий для жизни вдвоём.
-      </p>
-
-      <div class="couples-features">
-        <div class="couples-feat">
-          <div class="couples-feat-icon"><svg class="ic"><use href="#i-calendar"/></svg></div>
-          <div>
-            <h4>Календарь и события</h4>
-            <p>Совместные планы, напоминания о важных датах и таймлайн вашей истории.</p>
-          </div>
-        </div>
-        <div class="couples-feat">
-          <div class="couples-feat-icon"><svg class="ic"><use href="#i-camera"/></svg></div>
-          <div>
-            <h4>Общий фотоальбом</h4>
-            <p>Ваши фото попадают на карту воспоминаний - и их просто удобно держать в одном месте.</p>
-          </div>
-        </div>
-        <div class="couples-feat">
-          <div class="couples-feat-icon"><svg class="ic"><use href="#i-target"/></svg></div>
-          <div>
-            <h4>Испытания и задачи</h4>
-            <p>Еженедельные вызовы для пары, общий список дел и достижения, которые открываете вместе.</p>
-          </div>
-        </div>
-        <div class="couples-feat">
-          <div class="couples-feat-icon"><svg class="ic"><use href="#i-wallet"/></svg></div>
-          <div>
-            <h4>Совместные расходы</h4>
-            <p>Учёт общих трат, вишлист мест и вещей, карта воспоминаний с точками на ней.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="couples-grid-visual reveal" style="transition-delay:0.15s">
-      <div class="cg-tile pink-tint tall">
-        <div class="cg-icon"><svg class="ic"><use href="#i-calendar"/></svg></div>
-        <div class="cg-title">Июль 2026</div>
-        <div class="cg-desc">3 события запланировано. Ближайшее - в пятницу.</div>
-        <div class="cg-mini-chart">
-          <div class="cg-bar" style="height:40%;"></div>
-          <div class="cg-bar" style="height:70%;"></div>
-          <div class="cg-bar" style="height:90%;"></div>
-          <div class="cg-bar" style="height:50%;"></div>
-          <div class="cg-bar" style="height:80%;"></div>
-          <div class="cg-bar" style="height:30%;"></div>
-          <div class="cg-bar" style="height:65%;"></div>
-        </div>
-      </div>
-      <div class="cg-tile">
-        <div class="cg-icon"><svg class="ic"><use href="#i-target"/></svg></div>
-        <div class="cg-title">Задачи</div>
-        <div class="cg-desc">3 из 5 на этой неделе</div>
-      </div>
-      <div class="cg-tile">
-        <div class="cg-icon"><svg class="ic"><use href="#i-trophy"/></svg></div>
-        <div class="cg-title">Достижения</div>
-        <div class="cg-desc">7 разблокировано</div>
-      </div>
-      <div class="cg-tile" style="grid-column:span 2;">
-        <div class="cg-icon"><svg class="ic"><use href="#i-map"/></svg></div>
-        <div class="cg-title">Карта воспоминаний</div>
-        <div class="cg-desc">12 отмеченных мест - парки, кафе, маршруты.</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FAQ -->
-<section class="faq" id="faq">
-  <div class="faq-header reveal">
-    <div class="tag">Частые вопросы</div>
-    <h2>Коротко о главном</h2>
-  </div>
-  <div class="faq-list reveal">
-    <details class="faq-item">
-      <summary>Это бесплатно?<span class="faq-plus"></span></summary>
-      <p>Да. Базовый SoulMates бесплатный: лента, матчи, чат и совместимость. Premium добавляет инкогнито, расширенные фильтры и фишки для пар - но без него всё работает.</p>
-    </details>
-    <details class="faq-item">
-      <summary>Зачем подключать Steam и Spotify?<span class="faq-plus"></span></summary>
-      <p>Чтобы профиль собрался сам и совместимость считалась по реальным вкусам, а не по тому, что ты написал ради красоты. Данные используются только для подбора - публично видно ровно столько, сколько ты разрешишь.</p>
-    </details>
-    <details class="faq-item">
-      <summary>А если у меня нет всех этих сервисов?<span class="faq-plus"></span></summary>
-      <p>Достаточно одного. Чем больше подключишь, тем точнее процент - но даже один аккаунт уже лучше пустой анкеты.</p>
-    </details>
-    <details class="faq-item">
-      <summary>Что с приватностью?<span class="faq-plus"></span></summary>
-      <p>Точный возраст и геолокация скрыты по умолчанию. Есть режим инкогнито: тебя видят только те, кого ты лайкнул. Архитектура заточена против деанона.</p>
-    </details>
-    <details class="faq-item">
-      <summary>Когда запуск?<span class="faq-plus"></span></summary>
-      <p>Скоро - таймер наверху и внизу показывает обратный отсчёт. Кто в очереди, тот заходит первым. Все новости - в <a href="https://t.me/soulmates_ru_onboarding">Telegram-канале</a>.</p>
-    </details>
+      <div class="link-card-arrow"><svg class="ic"><use href="#i-arrow"/></svg></div>
+    </a>
   </div>
 </section>
 
@@ -799,6 +433,10 @@
 <footer>
   <div class="footer-logo">Soul<span>Mates</span></div>
   <ul class="footer-links">
+    <li><a href="screenshots.html">Скриншоты</a></li>
+    <li><a href="features.html">Возможности</a></li>
+    <li><a href="couples.html">Для пар</a></li>
+    <li><a href="faq.html">Вопросы</a></li>
     <li><a>Политика конфиденциальности</a></li>
     <li><a>Условия использования</a></li>
     <li><a href="https://t.me/soulmates_ru_onboarding">Telegram</a></li>
@@ -952,12 +590,9 @@
         phone.style.transition  = 'transform 0.1s ease-out';
       });
       heroVisual.addEventListener('mouseleave', () => {
-        phone.style.transform   = '';
-        phone.style.transition  = 'transform 0.55s ease-out';
-        setTimeout(() => {
-          phone.style.animationPlayState = '';
-          phone.style.transition = '';
-        }, 560);
+        phone.style.animationPlayState = 'running';
+        phone.style.transform  = '';
+        phone.style.transition = 'transform 0.4s ease-out';
       });
     }
   })();

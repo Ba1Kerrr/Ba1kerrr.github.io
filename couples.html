@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#060610">
+  <title>Для пар - SoulMates</title>
+  <meta name="description" content="11 инструментов для пары в SoulMates: календарь, таймлайн, фотоальбом, карта воспоминаний, расходы, вишлист, вопрос дня, испытания, задачи, достижения, couple-подписка.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="SoulMates - матч это только начало">
+  <meta property="og:description" content="11 инструментов для пары: от общего календаря до совместных расходов.">
+  <meta property="og:url" content="https://soulmates.com.ru/couples.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="style.css?v=3" rel="stylesheet">
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5L18 18M18 6l-2.5 2.5M8.5 15.5L6 18" stroke-width="1.6" stroke-linecap="round"/><circle cx="12" cy="12" r="2.6" stroke-width="1.6"/></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20s-7-4.5-9.2-8.4C1.3 8.9 2.6 5.5 6 5.2c2-.2 3.4 1 4 2 .6-1 2-2.2 4-2 3.4.3 4.7 3.7 3.2 6.4C19 15.5 12 20 12 20z" stroke-width="1.6" stroke-linejoin="round"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l8 3v5.5c0 4.7-3.4 8.3-8 9.5-4.6-1.2-8-4.8-8-9.5V6l8-3z" stroke-width="1.6" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="16" rx="2.5" stroke-width="1.6"/><path d="M3.5 9.5h17M8 3v4M16 3v4" stroke-width="1.6" stroke-linecap="round"/></symbol>
+    <symbol id="i-camera" viewBox="0 0 24 24"><path d="M4 8.5A2.5 2.5 0 0 1 6.5 6h1l1.2-1.8A1 1 0 0 1 10.5 4h3a1 1 0 0 1 .8.4L15.5 6h2A2.5 2.5 0 0 1 20 8.5v8A2.5 2.5 0 0 1 17.5 19h-11A2.5 2.5 0 0 1 4 16.5v-8z" stroke-width="1.6" stroke-linejoin="round"/><circle cx="12" cy="12.5" r="3.2" stroke-width="1.6"/></symbol>
+    <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" stroke-width="1.6"/><circle cx="12" cy="12" r="4.5" stroke-width="1.6"/><circle cx="12" cy="12" r="1.2" stroke-width="1.6"/></symbol>
+    <symbol id="i-wallet" viewBox="0 0 24 24"><rect x="3.5" y="6" width="17" height="13" rx="2.5" stroke-width="1.6"/><path d="M3.5 10h17" stroke-width="1.6"/><circle cx="16.5" cy="14" r="1.2" stroke-width="1.6"/></symbol>
+    <symbol id="i-music" viewBox="0 0 24 24"><path d="M9 18V6l10-2v12" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="6.5" cy="18" r="2.5" stroke-width="1.6"/><circle cx="16.5" cy="16" r="2.5" stroke-width="1.6"/></symbol>
+    <symbol id="i-game" viewBox="0 0 24 24"><path d="M7 8h10a4 4 0 0 1 3.9 3.1l.8 4A2.6 2.6 0 0 1 19.2 18c-1 0-1.6-.6-2.2-1.4L16 15H8l-1 1.6C6.4 17.4 5.8 18 4.8 18a2.6 2.6 0 0 1-2.5-2.9l.8-4A4 4 0 0 1 7 8z" stroke-width="1.6" stroke-linejoin="round"/><path d="M7 11.5v2M6 12.5h2M15.5 11.5h.01M17.5 13.5h.01" stroke-width="1.6" stroke-linecap="round"/></symbol>
+    <symbol id="i-film" viewBox="0 0 24 24"><rect x="3.5" y="4.5" width="17" height="15" rx="2.5" stroke-width="1.6"/><path d="M8 4.5v15M16 4.5v15M3.5 9.5h4.5M16 9.5h4.5M3.5 14.5h4.5M16 14.5h4.5" stroke-width="1.6"/></symbol>
+    <symbol id="i-map" viewBox="0 0 24 24"><path d="M12 21s6-5.3 6-10a6 6 0 1 0-12 0c0 4.7 6 10 6 10z" stroke-width="1.6" stroke-linejoin="round"/><circle cx="12" cy="11" r="2.2" stroke-width="1.6"/></symbol>
+    <symbol id="i-trophy" viewBox="0 0 24 24"><path d="M7 4h10v4a5 5 0 0 1-10 0V4z" stroke-width="1.6" stroke-linejoin="round"/><path d="M7 6H4.5v1A3.5 3.5 0 0 0 8 10.5M17 6h2.5v1A3.5 3.5 0 0 1 16 10.5M9.5 13.5h5M10 13.5l-.5 4M14 13.5l.5 4M8.5 20.5h7" stroke-width="1.6" stroke-linecap="round"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h13M13 6l6 6-6 6" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-tg" viewBox="0 0 24 24"><path d="M21 5L3.5 11.8c-.9.3-.9 1.5 0 1.8l4.3 1.4 1.7 5c.2.7 1.1.8 1.6.3l2.4-2.2 4.3 3.2c.6.4 1.4.1 1.6-.6L22 6.1c.2-.8-.5-1.4-1-1.1z" stroke-width="1.4" stroke-linejoin="round"/></symbol>
+    <symbol id="i-vk" viewBox="0 0 24 24"><path d="M3 8c.4 4.3 3 8.4 7.6 8.4h.5v-2.5c1.6.2 2.5 1.4 3.2 2.5h2.4c-.5-1.5-1.6-2.8-2.9-3.4 1.2-.7 2.2-1.9 2.6-3.6h-2.2c-.5 1.4-1.5 2.5-3.1 2.7V8h-2.3v4.2C7.7 11.8 6.5 9.9 6.2 8H3z" stroke-width="1.3" stroke-linejoin="round"/></symbol>
+    <symbol id="i-link" viewBox="0 0 24 24"><path d="M9 15l6-6M10.5 6.5l1-1a4 4 0 0 1 5.7 5.7l-1.7 1.7M13.5 17.5l-1 1a4 4 0 0 1-5.7-5.7l1.7-1.7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-gift" viewBox="0 0 24 24"><rect x="3.5" y="10" width="17" height="10" rx="1.5" stroke-width="1.6"/><path d="M3.5 10h17M12 10v10" stroke-width="1.6"/><path d="M12 10c-2-4-6-4-6-1s3 1 6 1zM12 10c2-4 6-4 6-1s-3 1-6 1z" stroke-width="1.6" stroke-linejoin="round"/></symbol>
+    <symbol id="i-question" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke-width="1.6"/><path d="M9.5 9.2a2.5 2.5 0 1 1 3.5 2.3c-.8.4-1 .9-1 1.8" stroke-width="1.6" stroke-linecap="round"/><circle cx="12" cy="16.5" r="0.9" fill="currentColor" stroke="none"/></symbol>
+  </defs>
+</svg>
+
+<nav>
+  <a href="index.html" class="logo">Soul<span>Mates</span></a>
+  <ul class="nav-center">
+    <li><a href="index.html">Главная</a></li>
+    <li><a href="screenshots.html">Скриншоты</a></li>
+    <li><a href="features.html">Возможности</a></li>
+    <li><a href="couples.html" class="active">Для пар</a></li>
+    <li><a href="faq.html">Вопросы</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="https://t.me/soulmates_ru_onboarding" class="btn-sm">Telegram</a>
+    <a href="https://t.me/soulmates_ru_onboarding" class="btn-sm btn-accent" target="_blank" rel="noopener">Telegram →</a>
+  </div>
+  <button class="nav-burger" id="navBurger" aria-label="Меню" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="nav-mobile" id="navMobile" aria-hidden="true">
+  <a href="index.html" onclick="closeNav()">Главная</a>
+  <a href="screenshots.html" onclick="closeNav()">Скриншоты</a>
+  <a href="features.html" onclick="closeNav()">Возможности</a>
+  <a href="couples.html" class="active" onclick="closeNav()">Для пар</a>
+  <a href="faq.html" onclick="closeNav()">Вопросы</a>
+  <div class="nav-mobile-divider"></div>
+  <div class="nav-mobile-actions">
+    <a href="https://t.me/soulmates_ru_onboarding" onclick="closeNav()">Telegram-канал</a>
+    <a href="https://t.me/soulmates_ru_onboarding" class="mob-accent" target="_blank" rel="noopener" onclick="closeNav()">Telegram →</a>
+  </div>
+</div>
+
+<div class="page-hero reveal">
+  <a href="index.html" class="page-back"><svg class="ic"><use href="#i-arrow"/></svg> На главную</a>
+  <div class="tag">Режим пары</div>
+  <h1>Матч - это только начало.</h1>
+  <p>Большинство приложений выключаются на «вы совпали». SoulMates с этого момента включается - и даёт полный инструментарий для жизни вдвоём. Все 11 - ниже.</p>
+</div>
+
+<!-- COUPLE DASHBOARD VISUAL -->
+<section class="couples" style="padding-top:20px;">
+  <div class="couples-grid-visual reveal" style="max-width:420px;margin:0 auto;">
+    <div class="cg-tile pink-tint tall">
+      <div class="cg-icon"><svg class="ic"><use href="#i-calendar"/></svg></div>
+      <div class="cg-title">Июль 2026</div>
+      <div class="cg-desc">3 события запланировано. Ближайшее - в пятницу.</div>
+      <div class="cg-mini-chart">
+        <div class="cg-bar" style="height:40%;"></div>
+        <div class="cg-bar" style="height:70%;"></div>
+        <div class="cg-bar" style="height:90%;"></div>
+        <div class="cg-bar" style="height:50%;"></div>
+        <div class="cg-bar" style="height:80%;"></div>
+        <div class="cg-bar" style="height:30%;"></div>
+        <div class="cg-bar" style="height:65%;"></div>
+      </div>
+    </div>
+    <div class="cg-tile">
+      <div class="cg-icon"><svg class="ic"><use href="#i-target"/></svg></div>
+      <div class="cg-title">Задачи</div>
+      <div class="cg-desc">3 из 5 на этой неделе</div>
+    </div>
+    <div class="cg-tile">
+      <div class="cg-icon"><svg class="ic"><use href="#i-trophy"/></svg></div>
+      <div class="cg-title">Достижения</div>
+      <div class="cg-desc">7 разблокировано</div>
+    </div>
+    <div class="cg-tile" style="grid-column:span 2;">
+      <div class="cg-icon"><svg class="ic"><use href="#i-map"/></svg></div>
+      <div class="cg-title">Карта воспоминаний</div>
+      <div class="cg-desc">12 отмеченных мест - парки, кафе, маршруты.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ALL 11 TOOLS -->
+<div class="tools-grid-header reveal">
+  <div class="tag">Полный список</div>
+  <h2>11 инструментов для пары</h2>
+</div>
+<div class="tools-grid reveal">
+  <div class="tool-card">
+    <div class="tool-icon"><svg class="ic"><use href="#i-calendar"/></svg></div>
+    <div>
+      <h4>Общий календарь</h4>
+      <p>Совместные планы и напоминания о важных датах - оба видят одно и то же расписание.</p>
+    </div>
+  </div>
+  <div class="tool-card">
+    <div class="tool-icon"><svg class="ic"><use href="#i-spark"/></svg></div>
+    <div>
+      <h4>Таймлайн отношений</h4>
+      <p>Лента ключевых моментов вашей истории - от первого свидания до сегодняшнего дня.</p>
+    </div>
+  </div>
+  <div class="tool-card">
+    <div class="tool-icon"><svg class="ic"><use href="#i-camera"/></svg></div>
+    <div>
+      <h4>Общий фотоальбом</h4>
+      <p>Ваши совместные фото в одном месте, без перекидывания в мессенджерах.</p>
+    </div>
+  </div>
+  <div class="tool-card">
+    <div class="tool-icon"><svg class="ic"><use href="#i-map"/></svg></div>
+    <div>
+      <h4>Карта воспоминаний</h4>
+      <p>Места, где вы были вместе, - отмечаются на карте и превращаются в маршрут вашей пары.</p>
+    </div>
+  </div>
+  <div class="tool-card">
+    <div class="tool-icon"><svg class="ic"><use href="#i-wallet"/></svg></div>
+    <div>
+      <h4>Совместные расходы</h4>
+      <p>Учёт общих трат - кто сколько потратил на что, без запутанных чатов «ты мне должен».</p>
+    </div>
+  </div>
+  <div class="tool-card">
+    <div class="tool-icon"><svg class="ic"><use href="#i-gift"/></svg></div>
+    <div>
+      <h4>Вишлист</h4>
+      <p>Список желаний на двоих - мест, вещей, фильмов, которые хочется посмотреть вместе.</p>
+    </div>
+  </div>
+  <div class="tool-card">
+    <div class="tool-icon"><svg class="ic"><use href="#i-question"/></svg></div>
+    <div>
+      <h4>Вопрос дня</h4>
+      <p>Ежедневный вопрос для двоих - повод узнать друг друга глубже, а не только «как дела».</p>
+    </div>
+  </div>
+  <div class="tool-card">
+    <div class="tool-icon"><svg class="ic"><use href="#i-target"/></svg></div>
+    <div>
+      <h4>Испытания недели</h4>
+      <p>Небольшие совместные вызовы каждую неделю - от свидания вслепую до готовки нового блюда.</p>
+    </div>
+  </div>
+  <div class="tool-card">
+    <div class="tool-icon"><svg class="ic"><use href="#i-check"/></svg></div>
+    <div>
+      <h4>Общие задачи</h4>
+      <p>Список дел на двоих - от бытовых мелочей до планов на отпуск.</p>
+    </div>
+  </div>
+  <div class="tool-card">
+    <div class="tool-icon"><svg class="ic"><use href="#i-trophy"/></svg></div>
+    <div>
+      <h4>Достижения</h4>
+      <p>Игровые ачивки за прожитое вместе - открываются за совместную активность в приложении.</p>
+    </div>
+  </div>
+  <div class="tool-card">
+    <div class="tool-icon"><svg class="ic"><use href="#i-shield"/></svg></div>
+    <div>
+      <h4>Couple-подписка</h4>
+      <p>Премиум-перки на двоих одной подпиской - дешевле, чем оформлять каждому отдельно.</p>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-inner reveal">
+    <div class="tag">Ранний доступ</div>
+    <h2>Открываемся скоро</h2>
+    <p class="cta-lead">
+      Бета пока закрыта — допиливаем каждый день. Все новости и дата открытия — в Telegram-канале.
+    </p>
+    <a href="https://t.me/soulmates_ru_onboarding" class="btn-primary cta-tg-btn" target="_blank" rel="noopener">
+      <svg class="ic" style="width:1.1em;height:1.1em"><use href="#i-tg"/></svg>
+      Подписаться на Telegram
+    </a>
+    <div class="cta-note">Пишем только по делу. Узнаешь первым.</div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">Soul<span>Mates</span></div>
+  <ul class="footer-links">
+    <li><a href="index.html">Главная</a></li>
+    <li><a href="screenshots.html">Скриншоты</a></li>
+    <li><a href="features.html">Возможности</a></li>
+    <li><a href="faq.html">Вопросы</a></li>
+    <li><a>Политика конфиденциальности</a></li>
+    <li><a>Условия использования</a></li>
+    <li><a href="https://t.me/soulmates_ru_onboarding">Telegram</a></li>
+    <li><a href="mailto:hello@soulmates.com.ru">hello@soulmates.com.ru</a></li>
+  </ul>
+  <div class="footer-copy">© 2026 SoulMates</div>
+</footer>
+
+<script>
+  const revealIO = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('on'); revealIO.unobserve(e.target); }
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => revealIO.observe(el));
+
+  const nav       = document.querySelector('nav');
+  const burger    = document.getElementById('navBurger');
+  const mobileNav = document.getElementById('navMobile');
+
+  burger.addEventListener('click', () => {
+    const open = mobileNav.classList.toggle('open');
+    burger.classList.toggle('open', open);
+    burger.setAttribute('aria-expanded', open);
+    mobileNav.setAttribute('aria-hidden', !open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  });
+
+  function closeNav() {
+    mobileNav.classList.remove('open');
+    burger.classList.remove('open');
+    burger.setAttribute('aria-expanded', 'false');
+    mobileNav.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  document.addEventListener('click', e => {
+    if (!nav.contains(e.target) && !mobileNav.contains(e.target)) closeNav();
+  });
+</script>
+
+</body>
+</html>
