@@ -1,42 +1,28 @@
 # SoulMates Landing Page
 
-Marketing site for SoulMates, an ML-matched dating platform with a couples ecosystem. This repo is one of three; the other two (backend/web app, mobile app) are private, so their scope is summarized below instead of linked.
+SoulMates is a dating platform built on ML-ranked matching instead of an endless swipe feed, with a couples ecosystem (shared timeline, budget, challenges) for people who match. This repo is the public marketing site for it: five static pages pitching the product, not the product itself.
 
 **Author:** Ba1Kerrr
 
-## The three repos
+## The product
 
-**Backend/web** (private) — Python/FastAPI backend and React web client, in production. ML-ranked feed (LightGBM), real-time chat over WebSocket, WebRTC video calls, a couples ecosystem (shared timeline, budget, challenges), subscriptions and micropayments, admin panel with moderation and CRM tooling. 330+ backend tests, Docker Compose deployment.
+Backend and web client (private repo): Python/FastAPI, React. ML-ranked feed (LightGBM), real-time chat over WebSocket, WebRTC video calls, the couples ecosystem, subscriptions and micropayments, admin panel with moderation and CRM tooling. In production, 330+ backend tests.
 
-**Mobile** (private) — Flutter client covering auth, profile, swipe feed, chat, and subscription screens, building successfully in CI for Android. Its API client still targets an earlier backend endpoint layout and does not yet talk to the live API — UI is ahead of integration.
+Mobile app (private repo): Flutter client covering auth, profile, swipe feed, chat, and subscription screens. Builds in CI for Android; still being wired up to the live API.
 
-**This repo** — the public-facing static site described below.
+## This repo
 
-## What this is
-
-Plain HTML/CSS, no build step, no framework. Five pages:
+Plain HTML/CSS, no build step, no framework.
 
 | Page | Content |
 |------|---------|
-| `index.html` | Landing page — hero, core pitch, feature highlights |
+| `index.html` | Hero, core pitch, feature highlights |
 | `features.html` | Full feature breakdown |
 | `couples.html` | Couples ecosystem pitch |
 | `screenshots.html` | Product screenshots |
 | `faq.html` | FAQ |
 
-Shared styling in `style.css`, shared nav/footer markup repeated per page (no templating).
-
-## Running locally
-
-```bash
-python -m http.server 5599
-```
-
-Then open `http://localhost:5599`.
-
-## Deployment
-
-`.github/workflows/deploy.yml` publishes the repo root to GitHub Pages on every push to `main`.
+Shared styling in `style.css`; nav and footer markup are repeated per page (no templating). Deploys to GitHub Pages on every push to `main` via `.github/workflows/deploy.yml`.
 
 ## License
 
